@@ -1,0 +1,68 @@
+Pipster License
+
+Copyright (c) 2026 cptgummiball. All rights reserved.
+
+"Pipster" means the Minecraft mod Pipster in every version and form in which cptgummiball
+publishes it: the jar files, the compiled code in them, textures, models, icons, sounds, texts,
+language files, data files and documentation, and the Pipster API files (section 5).
+
+1. Ownership
+   Pipster is the property of cptgummiball. This license gives you limited rights to use it. It
+   does not transfer any ownership, copyright or other rights. All rights not expressly granted
+   here are reserved.
+
+2. What you may do
+   a) Download Pipster from its official pages (Modrinth, CurseForge, and the releases of
+      https://github.com/CptGummiball/Pipster).
+   b) Use Pipster to play Minecraft: in singleplayer, and on your own or any other server.
+   c) Show Pipster in videos, streams, screenshots, reviews and guides.
+
+3. Modpacks
+   You may include Pipster in modpacks, public or private, free or paid, and distribute it as part
+   of such a modpack, but only in its original, unmodified state: the jar files exactly as
+   cptgummiball published them, not renamed in content, not repackaged, not altered in any way.
+   Where the modpack platform can link to the official download instead of copying the file,
+   linking is preferred.
+
+4. What you may not do
+   Unless cptgummiball has given you written permission, you may not:
+   a) modify, adapt, translate, patch or otherwise change Pipster or any part of it, or create
+      works derived from it, including modified jar files, forks, ports and re-textures;
+   b) decompile, disassemble, deobfuscate or otherwise reverse engineer Pipster, or attempt to
+      obtain its source code, except where and only to the extent that applicable law expressly
+      allows this despite this restriction;
+   c) upload, mirror or distribute Pipster anywhere other than as part of a modpack under
+      section 3, or offer it as your own work;
+   d) use the textures, models, icons, sounds or texts of Pipster in other projects;
+   e) remove or change this license or any copyright notice.
+
+5. Pipster API
+   cptgummiball publishes an API for other mods: the Java package dev.cptgummiball.pipster.api
+   (provided as a separate API jar with its documentation) and the documented integration class
+   dev.cptgummiball.pipster.integration.PipsterEndpointProviders. You may use the API jar, the
+   documentation and the official Pipster jar files as compile-only dependencies to develop,
+   compile and distribute your own mods that work together with Pipster (for example, mods that
+   register gases or offer gas handlers). Your mod may reference these classes, but must not
+   contain the API classes or any other part of Pipster; players install Pipster separately. The
+   API may not be modified or redistributed on its own. Sections 1 and 4 apply to the API in all
+   other respects.
+
+6. No warranty
+   Pipster is provided "as is", without warranty of any kind, express or implied, including
+   warranties of merchantability, fitness for a particular purpose and non-infringement. Back up
+   your worlds.
+
+7. Limitation of liability
+   To the extent permitted by applicable law, cptgummiball is not liable for any damages arising
+   from the use of or inability to use Pipster, including loss of data or of game worlds.
+   Liability for intent and gross negligence, and any liability that cannot be excluded by law,
+   remain unaffected.
+
+8. Termination
+   If you break this license, your rights under it end automatically.
+
+9. Other
+   Pipster is not an official Minecraft product and is not approved by or associated with Mojang
+   or Microsoft. Minecraft's own terms (EULA) also apply to its use.
+
+Questions or requests for permission: https://github.com/CptGummiball/Pipster/issues
