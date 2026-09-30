@@ -168,12 +168,7 @@ Please open an issue with:
 
 ## License
 
-* **Code:** MIT, see [`LICENSE-CODE`](LICENSE-CODE)
-* **Assets** (textures, models, icons, language files): all rights reserved, see
-  [`LICENSE-ASSETS`](LICENSE-ASSETS)
+MIT, see [LICENSE]
 
-Modpacks: you may use Pipster in any modpack, as long as the jar files stay unmodified (see
-[`LICENSE-ASSETS`](LICENSE-ASSETS)).
-
-Pipster is made by **cptgummiball**. It is inspired by the readability of classic pipe mods, but
+Pipster made by **cptgummiball**. It is inspired by the readability of classic pipe mods, but
 contains no code or assets from other mods.
