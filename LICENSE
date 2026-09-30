@@ -1,5 +1,0 @@
-Pipster — licensing overview
-
-1. Source code (all *.java, *.gradle, build scripts, tools/) is licensed under the MIT License, see LICENSE-CODE.
-2. Assets (textures, models' artwork, icons, sounds under assets-src/ and any assets/pipster/textures/) are
-   All Rights Reserved, see LICENSE-ASSETS.
