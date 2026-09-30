@@ -1,0 +1,121 @@
+name: Mod compatibility
+description: A machine, storage or generator from another mod does not work with Pipster pipes.
+labels: ["compatibility", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Pipster connects to other mods through the standard interfaces of each loader (Fabric Transfer API and Team Reborn Energy, NeoForge capabilities). See [Resources and Compatibility](https://github.com/CptGummiball/Pipster/wiki/Resources-and-Compatibility).
+
+        Known limits, no need to report:
+        * **Mekanism chemicals** are not supported yet.
+        * **Fabric energy is push-based:** the port at a generator must be set to **Extract** or **Both**.
+
+  - type: input
+    id: othermod
+    attributes:
+      label: Other mod and version
+      placeholder: "ExampleMod 2.3.1"
+    validations:
+      required: true
+
+  - type: input
+    id: block
+    attributes:
+      label: Block or machine
+      description: Which block of that mod? (name, and the id if you know it, e.g. from F3)
+      placeholder: "Example Furnace (examplemod:furnace)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: minecraft
+    attributes:
+      label: Minecraft version
+      options:
+        - "1.21.1"
+        - "1.21.2"
+        - "1.21.3"
+        - "1.21.4"
+        - "1.21.5"
+        - "1.21.6"
+        - "1.21.7"
+        - "1.21.8"
+        - "1.21.9"
+        - "1.21.10"
+        - "1.21.11"
+        - "26.1"
+        - "26.1.1"
+        - "26.1.2"
+        - "26.2"
+        - "26.3"
+        - "other (write it below)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: loader
+    attributes:
+      label: Loader
+      options:
+        - Fabric
+        - NeoForge
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Pipster jar and loader version
+      placeholder: "pipster-0.1.0+mc1.21.1-neoforge.jar, NeoForge 21.1.252"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: resource
+    attributes:
+      label: Resource
+      multiple: true
+      options:
+        - Items
+        - Fluids
+        - Gas
+        - Energy
+    validations:
+      required: true
+
+  - type: dropdown
+    id: symptom
+    attributes:
+      label: What happens?
+      options:
+        - The pipe does not connect to the block (no port/flange appears)
+        - It connects, but nothing moves
+        - It moves, but the wrong things or wrong amounts
+        - The port shows "Quarantined: faulty foreign handler"
+        - Resources are lost or duplicated
+        - Crash
+        - Something else
+    validations:
+      required: true
+
+  - type: input
+    id: status
+    attributes:
+      label: Port status line
+      description: Open the port with the Conduit Wrench. What does the status line say, and which mode is the port in?
+      placeholder: "Extract, status: Source empty"
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Details and steps to reproduce
+      description: Which side of the block is the pipe on? Does it work with a vanilla chest or cauldron in the same place? Screenshots help.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: "`logs/latest.log` (drag and drop, or a paste link), and a crash report if there was one."

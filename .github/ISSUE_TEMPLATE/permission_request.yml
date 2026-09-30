@@ -1,0 +1,85 @@
+name: Permission request
+description: Ask for permission to do something the Pipster license does not allow on its own.
+title: "[Permission] "
+labels: ["permission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Pipster is not open source. The [license](https://github.com/CptGummiball/Pipster/blob/main/LICENSE) lists what you may do and what needs written permission from cptgummiball.
+
+        **You do not need to ask for:**
+        * using Pipster in a modpack (public or private, free or paid) with the jar files **exactly as published**,
+        * playing with Pipster on any server,
+        * videos, streams, screenshots, reviews and guides,
+        * making your own mod work with Pipster through the [API](https://github.com/CptGummiball/Pipster/blob/main/api/README.md) (without shipping Pipster files).
+
+        For anything else, fill out this form. **A permission is only valid if cptgummiball grants it in writing in this issue.** It applies only to what is described here.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What do you want to do?
+      options:
+        - Publish a modified version of Pipster (patch, fork, port)
+        - Include Pipster classes or files inside another mod
+        - Re-upload or mirror Pipster outside a modpack (other website, launcher, server download)
+        - Use Pipster textures, models, icons or sounds in another project
+        - Translate Pipster (language file or resource pack)
+        - Look into Pipster's code (e.g. decompile it) for a compatibility project
+        - Something else
+    validations:
+      required: true
+
+  - type: input
+    id: project
+    attributes:
+      label: Your project
+      description: Name and link of the project, if it already exists.
+      placeholder: "ExamplePack Launcher – https://example.org"
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: What exactly do you plan?
+      description: What would you change, use or publish? Which Pipster versions and files are involved?
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is it needed?
+      description: Why can it not be done with the permissions the license already gives?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: public
+    attributes:
+      label: Where and how will it be available?
+      options:
+        - Publicly, free
+        - Publicly, paid or with monetization (ads, donations required, subscriptions)
+        - Private or closed group only
+        - Not decided yet
+    validations:
+      required: true
+
+  - type: input
+    id: contact
+    attributes:
+      label: Contact (optional)
+      description: If you prefer another way to be contacted than this issue (e.g. Discord name). Do not post private data such as your address or phone number.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Confirmation
+      options:
+        - label: I understand that I may only proceed after cptgummiball grants the permission in writing in this issue, and only within what is described here.
+          required: true
+        - label: I will credit Pipster and cptgummiball and link to the official download pages if the permission is granted.
+          required: true

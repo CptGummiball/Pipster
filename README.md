@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="publish/assets/icon.png" width="96" alt="Pipster icon">
+  <img src="images/icon.png" width="96" alt="Pipster icon">
 </p>
 
 <h1 align="center">Pipster</h1>
@@ -10,9 +10,10 @@
 </p>
 
 <p align="center">
+  <a href="#downloads">Download</a> ·
   <a href="#version-status">Versions</a> ·
   <a href="../../wiki">Wiki</a> ·
-  <a href="#building-from-source">Building</a> ·
+  <a href="api/README.md">API for mod developers</a> ·
   <a href="#license">License</a>
 </p>
 
@@ -20,7 +21,11 @@
 > [Version status](#version-status) are built, started and tested automatically, but there is
 > no release build yet. Expect changes to balance values and save data before 1.0.
 
-![Pipster pipes between two chests, cauldrons and tesseracts](publish/assets/pipster-fabric-machines_close.jpg)
+This repository holds the documentation, the [wiki](../../wiki), the
+[issue tracker](../../issues) and the [API for mod developers](api/README.md). The mod itself
+is downloaded from Modrinth or CurseForge. Pipster is not open source; see [License](#license).
+
+![Pipster pipes between two chests, cauldrons and tesseracts](images/01-machines.jpg)
 
 ## What Pipster is
 
@@ -44,6 +49,8 @@ directly at the port where the pipe meets a machine.
 * **Honest throughput:** every pipe segment has one shared per-tick budget. A single Copper
   segment limits a whole path, even between Quantum ports. There is no creative tier that
   ignores limits.
+
+![All 64 connection shapes of item pipes](images/02-item-pipe-shapes.jpg)
 
 ## Tiers
 
@@ -106,13 +113,14 @@ and network packet checks).
 | 26.3 | ✅ | ✅ (NeoForge beta) | tested |
 
 "NeoForge beta" means that NeoForge had only beta builds for that Minecraft version on the test
-date.
+date. The exact loader, Fabric API and NeoForge versions used for every test are listed in the
+wiki under [Supported Versions](../../wiki/Supported-Versions).
 
 ## Performance
 
 Pipster does no work per pipe per tick. It keeps one transport graph per dimension and
 resource type on the server, rebuilds it in bounded steps, and never loads chunks. On the
-benchmark machine
+benchmark machine (Intel Core i7-13700H, Java 21, dedicated server, Minecraft 1.21.1):
 
 | Scene | Pipster time per tick (p95) |
 |---|---|
@@ -121,7 +129,8 @@ benchmark machine
 | 50,000 pipes, 500 active ports | 4.4 – 5.2 ms |
 
 These numbers hold for that machine and those scenes only. They are no guarantee of 20 TPS on
-other hardware or in other worlds.
+other hardware or in other worlds. The method is described in the wiki under
+[Performance](../../wiki/Performance).
 
 ## Server and multiplayer
 
@@ -135,31 +144,22 @@ other hardware or in other worlds.
 * Server settings live in `config/pipster-server.properties` (see the
   [wiki](../../wiki/Configuration)).
 
+## Downloads
+
+* Modrinth: *(link follows with the first release)*
+* CurseForge: *(link follows with the first release)*
+
+Please download Pipster only from these pages. Pick the file for your exact Minecraft version
+and loader.
+
 ## Documentation
 
 * [Wiki](../../wiki): how to play, recipes, tesseracts, configuration, FAQ
-* [`docs/API.md`](docs/API.md): integration API for mod developers (gas handlers, endpoint providers)
-* [`docs/SAVE_FORMAT.md`](docs/SAVE_FORMAT.md): save data format and migration notes
-* [`docs/BUILDING.md`](docs/BUILDING.md): building and testing
-
-## Building from source
-
-You need JDK 25 (runs Gradle) and JDK 21 (compile target for 1.21.x); Gradle finds both through
-toolchains.
-
-```bash
-./gradlew build                                              # core + API, incl. property tests
-./gradlew -p platform/mc1211 build                           # Minecraft 1.21.1, both loaders
-./gradlew -p platform/mc26 -Ppipster.mc=26.2 build           # one version of a version family
-./gradlew -p platform/mc26 -Ppipster.mc=26.2 :fabric:runGametest
-```
-
-Jars end up in `platform/<profile>/<loader>/build/[<mc>/]libs/`. See
-[`docs/BUILDING.md`](docs/BUILDING.md) for all profiles and test commands.
+* [API for mod developers](api/README.md): gas handlers, endpoint providers, Maven coordinates
 
 ## Reporting bugs
 
-Please open an issue with:
+Please open an [issue](../../issues/new/choose) with:
 
 * Minecraft version, loader (Fabric/NeoForge) and loader version
 * the Pipster jar name (it contains the Minecraft version)
@@ -168,7 +168,17 @@ Please open an issue with:
 
 ## License
 
-All Rights Reserved, see [LICENSE](https://github.com/CptGummiball/Pipster/blob/main/LICENSE)
+Pipster is **not open source**. All rights reserved by cptgummiball; see [`LICENSE`](LICENSE).
+In short:
 
-Pipster made by **cptgummiball**. It is inspired by the readability of classic pipe mods, but
-contains no code or assets from other mods.
+* You may play with Pipster, use it on any server and show it in videos and streams.
+* You may put Pipster into **modpacks**, as long as the jar files stay exactly as published.
+* You may **not** modify, decompile, re-upload or otherwise redistribute Pipster, or use its
+  textures and models elsewhere.
+* Mod developers may compile against the [Pipster API](api/README.md) to make their mods work
+  with Pipster.
+* For anything else, open a [permission request](../../issues/new?template=permission_request.yml).
+
+Pipster is made by **cptgummiball**. It is inspired by the readability of classic pipe mods, but
+contains no code or assets from other mods. Pipster is not an official Minecraft product and is
+not associated with Mojang or Microsoft.

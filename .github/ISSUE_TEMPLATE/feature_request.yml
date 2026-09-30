@@ -1,0 +1,47 @@
+name: Feature request
+description: Suggest a new feature or a change to an existing one.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ideas are welcome. Please describe the problem you want to solve, not only the solution. That makes it easier to find a design that fits Pipster.
+
+        Some things are out of scope on purpose: pipes that load chunks, a creative tier without throughput limits, and one jar for many Minecraft versions.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      placeholder: "In my base I often want to ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: How could it work in game? Which pipe kind, which card, which screen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered
+      description: Can it be done with the current filters, priorities or tesseracts?
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - Pipes and tiers
+        - Ports and the Conduit Wrench
+        - Filter and rule cards
+        - Tesseracts
+        - Mod compatibility / integration API
+        - Server administration / configuration
+        - Visuals / GUI
+        - Other

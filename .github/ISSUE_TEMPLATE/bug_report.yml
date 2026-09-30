@@ -1,0 +1,140 @@
+name: Bug report
+description: Something in Pipster does not work as described, crashes or loses resources.
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please check the [FAQ](https://github.com/CptGummiball/Pipster/wiki/FAQ) first. Many "nothing moves" problems come from a port still set to **Insert**.
+
+        If the problem only happens together with another mod's machine, please use the **Mod compatibility** template instead.
+
+  - type: dropdown
+    id: minecraft
+    attributes:
+      label: Minecraft version
+      description: Pipster jars are built for exactly one Minecraft version. The jar name contains it.
+      options:
+        - "1.21.1"
+        - "1.21.2"
+        - "1.21.3"
+        - "1.21.4"
+        - "1.21.5"
+        - "1.21.6"
+        - "1.21.7"
+        - "1.21.8"
+        - "1.21.9"
+        - "1.21.10"
+        - "1.21.11"
+        - "26.1"
+        - "26.1.1"
+        - "26.1.2"
+        - "26.2"
+        - "26.3"
+        - "other (write it below)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: loader
+    attributes:
+      label: Loader
+      options:
+        - Fabric
+        - NeoForge
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Pipster jar and loader version
+      description: The exact file name of the Pipster jar, and the Fabric Loader + Fabric API or NeoForge version.
+      placeholder: "pipster-0.1.0+mc26.2-fabric.jar, Fabric Loader 0.19.5, Fabric API 0.161.0+26.2"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Where does it happen?
+      options:
+        - Singleplayer
+        - Dedicated server (multiplayer)
+        - LAN / integrated server
+        - Not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - Item pipes
+        - Fluid pipes
+        - Gas pipes
+        - Energy cables
+        - Tesseracts / channels
+        - Filter or rule cards
+        - Conduit Wrench / port screen
+        - Rendering / models / textures
+        - Recipes
+        - Saving / loading / world upgrade
+        - Performance / server lag
+        - Crash
+        - Other
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Describe what you saw. If resources were lost or duplicated, say which and how many.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The smaller the setup, the faster it can be fixed. Screenshots of the build and of the port screen (including its status line) help a lot.
+      placeholder: |
+        1. Place two chests and connect them with Copper Item Pipes
+        2. Set the port at chest A to Extract
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: mods
+    attributes:
+      label: Other mods
+      description: The full mod list, or at least the mods involved (with versions). Write "none" for a clean install.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs and crash report
+      description: |
+        Please upload `logs/latest.log` and, if there was a crash, the file from `crash-reports/` (drag and drop into this field, or link a paste site). Server problems: the server log.
+      placeholder: Drop files here or paste a link.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I use the Pipster jar that matches my exact Minecraft version and loader.
+          required: true
+        - label: I searched the existing issues for this problem.
+          required: true

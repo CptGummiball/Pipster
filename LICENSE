@@ -65,4 +65,5 @@ language files, data files and documentation, and the Pipster API files (section
    Pipster is not an official Minecraft product and is not approved by or associated with Mojang
    or Microsoft. Minecraft's own terms (EULA) also apply to its use.
 
-Questions or requests for permission: https://github.com/CptGummiball/Pipster/issues
+Questions: https://github.com/CptGummiball/Pipster/issues
+Requests for permission: https://github.com/CptGummiball/Pipster/issues/new?template=permission_request.yml
