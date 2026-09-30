@@ -168,7 +168,7 @@ Please open an issue with:
 
 ## License
 
-MIT, see [LICENSE](https://github.com/CptGummiball/Pipster/blob/main/LICENSE)
+All Rights Reserved, see [LICENSE](https://github.com/CptGummiball/Pipster/blob/main/LICENSE)
 
 Pipster made by **cptgummiball**. It is inspired by the readability of classic pipe mods, but
 contains no code or assets from other mods.
