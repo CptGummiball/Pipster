@@ -20,7 +20,7 @@
 > [Version status](#version-status) are built, started and tested automatically, but there is
 > no release build yet. Expect changes to balance values and save data before 1.0.
 
-![Pipster pipes between two chests, cauldrons and tesseracts](docs/evidence/screenshots/1.21.1/pipster-fabric-machines_close.jpg)
+![Pipster pipes between two chests, cauldrons and tesseracts](publish/assets/pipster-fabric-machines_close.jpg)
 
 ## What Pipster is
 
@@ -44,8 +44,6 @@ directly at the port where the pipe meets a machine.
 * **Honest throughput:** every pipe segment has one shared per-tick budget. A single Copper
   segment limits a whole path, even between Quantum ports. There is no creative tier that
   ignores limits.
-
-![All 64 connection shapes of item pipes](docs/evidence/screenshots/1.21.1/pipster-fabric-masks_item_close.jpg)
 
 ## Tiers
 
@@ -108,15 +106,13 @@ and network packet checks).
 | 26.3 | ✅ | ✅ (NeoForge beta) | tested |
 
 "NeoForge beta" means that NeoForge had only beta builds for that Minecraft version on the test
-date. The details for every version (loader, Fabric API and NeoForge versions, test logs) are in
-[`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) and
-[`compatibility-lock.json`](compatibility-lock.json).
+date.
 
 ## Performance
 
 Pipster does no work per pipe per tick. It keeps one transport graph per dimension and
 resource type on the server, rebuilds it in bounded steps, and never loads chunks. On the
-benchmark machine (Intel Core i7-13700H, Java 21, dedicated server, Minecraft 1.21.1):
+benchmark machine
 
 | Scene | Pipster time per tick (p95) |
 |---|---|
@@ -125,8 +121,7 @@ benchmark machine (Intel Core i7-13700H, Java 21, dedicated server, Minecraft 1.
 | 50,000 pipes, 500 active ports | 4.4 – 5.2 ms |
 
 These numbers hold for that machine and those scenes only. They are no guarantee of 20 TPS on
-other hardware or in other worlds. Methods and raw data are in
-[`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) and `docs/evidence/bench/`.
+other hardware or in other worlds.
 
 ## Server and multiplayer
 
@@ -146,7 +141,6 @@ other hardware or in other worlds. Methods and raw data are in
 * [`docs/API.md`](docs/API.md): integration API for mod developers (gas handlers, endpoint providers)
 * [`docs/SAVE_FORMAT.md`](docs/SAVE_FORMAT.md): save data format and migration notes
 * [`docs/BUILDING.md`](docs/BUILDING.md): building and testing
-* [`docs/PORTING.md`](docs/PORTING.md): how the version families are ported
 
 ## Building from source
 
