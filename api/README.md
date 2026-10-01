@@ -157,7 +157,50 @@ PipsterEndpointProviders.register(new TransportEndpointProvider<PipsterEndpointP
   `pipster:empty_contents_shaped`: a shaped recipe that refuses ingredients which still carry
   buffered contents or block data.
 
-## 5. Stability
+## 5. Built-in integrations (no code needed)
+
+These work without any code in your mod. They are only active when the other mod is installed.
+
+### CC: Tweaked
+
+Conduits and tesseracts are a generic peripheral with the additional type `pipster`
+(`peripheral.find("pipster")`). Reading is always possible. Switching needs the port's (or
+tesseract side's) redstone mode **Computer**, which a player with build rights sets in the port
+screen. Channel names are never exposed, and channels cannot be selected from Lua. All methods run
+on the server thread and stay within the one block.
+
+| Method (target) | Returns / does |
+|---|---|
+| `getConduit()` (conduit) | `{kind, tier, rebuilding, network?, nodes?, ports?}` |
+| `getPorts()` (conduit) | ports by side name: `{mode, status, priority, redstone, enabled?, quarantined, buffer = [{name, amount, unit}]}` |
+| `getPort(side)` (conduit) | one port; error if there is none |
+| `setPortEnabled(side, enabled)` (conduit) | switches the port on or off (redstone mode "computer" only) |
+| `setPortMode(side, mode)` (conduit) | `insert`, `extract`, `both`, `disabled` (redstone mode "computer" only) |
+| `getTesseract()` (tesseract) | `{quantum, item/fluid/gas/energy = {bound, sides = {side = {mode, status, ...}}}}` |
+| `setSideEnabled(kind, side, enabled)` (tesseract) | switches a side on or off (redstone mode "computer" only) |
+
+Sides are `down`, `up`, `north`, `south`, `west`, `east`. Amounts use display units (items, mB,
+E). Status values are the port statuses in lower case, for example `active`, `source_empty`,
+`targets_full`, `claim_protected`, `computer_off`.
+
+### Permission nodes
+
+`pipster.admin` (see and edit foreign private tesseract channels) and `pipster.command`
+(`/pipster`). Fabric: through fabric-permissions-api. NeoForge: through NeoForge's permission
+system. Without a permission tool, or with a node unset, the operator check (level 2) applies.
+
+### Claims and teams
+
+Pipster honours Open Parties and Claims and FTB Chunks claims for ports and pipe connections, and
+treats members of one FTB Teams team or OPAC party as co-owners of channels, tesseracts and
+conduits. Your mod does not need to do anything for this.
+
+### Tags
+
+* `c:tools/wrench` contains `pipster:conduit_wrench`. Pipster's own actions still require the
+  Conduit Wrench.
+
+## 6. Stability
 
 * `PipsterApi.API_VERSION` changes with every incompatible change to the API package. The API jar
   carries the API version in its name.

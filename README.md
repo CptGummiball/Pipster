@@ -17,9 +17,8 @@
   <a href="#license">License</a>
 </p>
 
-> **Status: pre-release.** Pipster has not been published yet. The versions listed under
-> [Version status](#version-status) are built, started and tested automatically, but there is
-> no release build yet. Expect changes to balance values and save data before 1.0.
+> **Version 1.0.0**, the first release. For Minecraft 1.21.1 to 26.3 on Fabric and NeoForge; see
+> [Version status](#version-status).
 
 This repository holds the documentation, the [wiki](../../wiki), the
 [issue tracker](../../issues) and the [API for mod developers](api/README.md). The mod itself
@@ -67,66 +66,86 @@ balance values, not measured results.
 
 ## Works with other mods
 
-Pipster talks to other mods only through the standard interfaces of each loader. It has
-no hard dependency on any content mod.
+Pipster talks to other mods through the standard interfaces of each loader. It has no hard
+dependency on any content mod.
 
 | Resource | Fabric | NeoForge |
 |---|---|---|
-| Items | Fabric Transfer API (`ItemStorage`) | item handler capability (`IItemHandler`; `ResourceHandler` from 21.9 on) |
-| Fluids | Fabric Transfer API (`FluidStorage`) | fluid handler capability (`IFluidHandler`; `ResourceHandler` from 21.9 on) |
-| Energy | Team Reborn Energy | energy capability (`IEnergyStorage`; `EnergyHandler` from 21.9 on) |
+| Items | Fabric Transfer API | NeoForge item capability |
+| Fluids | Fabric Transfer API | NeoForge fluid capability |
+| Energy | Team Reborn Energy (included) | NeoForge energy capability |
 | Gas | Pipster gas API, plus fluids tagged `#pipster:gaseous` | Pipster gas API, plus fluids tagged `#pipster:gaseous` |
+
+Mod developers find the exact interfaces per version in the [API documentation](api/README.md).
 
 What this means in practice:
 
 * Any block that exposes these interfaces can be connected. That is not a promise that every
-  mod works; only the loaders' own test blocks and Pipster's test content are tested
-  automatically.
-* **Mekanism chemicals are not supported yet** (no adapter). Gases from Mekanism do not travel
-  through Pipster gas pipes.
+  mod works. Besides the automated tests, the release was played with Energized Power, Storage
+  Drawers, Oritech, Create, Immersive Engineering and Sophisticated Storage.
+* **Mekanism chemicals are not supported yet** (no adapter). Mekanism gases do not travel
+  through Pipster gas pipes; Mekanism items, fluids and energy work through the normal interfaces.
 * On Fabric, energy follows the push convention: generators push into cables, and a port must be
   set to Extract or Both to accept that push.
 
+### Built-in optional integrations
+
+These mods are **never required**. Install them and Pipster uses them; without them nothing
+changes. Each integration is included for the Minecraft versions where the other mod has a
+release (see the [wiki](../../wiki/Supported-Versions#integrations)).
+
+| Mod | What you get |
+|---|---|
+| [Jade](https://modrinth.com/mod/jade) | Look at a pipe or tesseract: port mode and status, bound channels (names only if you have access). |
+| [CC: Tweaked](https://modrinth.com/mod/cc-tweaked) | Computers read pipes and tesseracts (ports, status, buffers). With the redstone mode "Computer" they can switch ports. |
+| [Open Parties and Claims](https://modrinth.com/mod/open-parties-and-claims), [FTB Chunks](https://www.curseforge.com/minecraft/mc-mods/ftb-chunks-forge) | Claim protection: pipes cannot pull from or push into blocks in someone else's claim. |
+| FTB Teams, Open Parties and Claims parties | Team sharing: teammates share channels, tesseracts and pipes, also for things placed before they joined. |
+| LuckPerms and other permission mods | Permission nodes `pipster.admin` and `pipster.command`. Without a permission mod, operators (level 2) keep these rights. |
+
+The Conduit Wrench is also tagged `c:tools/wrench`, so other mods recognise it as a wrench.
+
 ## Version status
 
-One jar per Minecraft version and loader. A jar declares exactly the one Minecraft version it
-was tested on.
+All versions below are tested. Some jars cover several Minecraft versions; such a jar was started
+and tested unchanged on **every** version it lists.
 
-"Tested" here means: the jar for that exact version was built, a client and a dedicated server
-started, and all automated game tests passed on both loaders (item, fluid, energy and gas
-transport, throughput limits, filters, tesseracts, break/place with buffered contents, save/load
-and network packet checks).
+| Minecraft | Fabric jar | NeoForge jar |
+|---|---|---|
+| 1.21.1 | `pipster-1.0.0+mc1.21.1-fabric.jar` | `pipster-1.0.0+mc1.21.1-neoforge.jar` |
+| 1.21.2 – 1.21.4 | `pipster-1.0.0+mc1.21.2-1.21.4-fabric.jar` | `pipster-1.0.0+mc1.21.2-1.21.4-neoforge.jar` ¹ |
+| 1.21.5 | `pipster-1.0.0+mc1.21.5-fabric.jar` | `pipster-1.0.0+mc1.21.5-neoforge.jar` |
+| 1.21.6 – 1.21.8 | `pipster-1.0.0+mc1.21.6-1.21.8-fabric.jar` | `pipster-1.0.0+mc1.21.6-1.21.8-neoforge.jar` ¹ |
+| 1.21.9 | `pipster-1.0.0+mc1.21.9-1.21.10-fabric.jar` | `pipster-1.0.0+mc1.21.9-neoforge.jar` ¹ |
+| 1.21.10 | `pipster-1.0.0+mc1.21.9-1.21.10-fabric.jar` | `pipster-1.0.0+mc1.21.10-neoforge.jar` |
+| 1.21.11 | `pipster-1.0.0+mc1.21.11-fabric.jar` | `pipster-1.0.0+mc1.21.11-neoforge.jar` |
+| 26.1, 26.1.1 | `pipster-1.0.0+mc26.1-26.1.2-fabric.jar` | `pipster-1.0.0+mc26.1-26.1.1-neoforge.jar` ¹ |
+| 26.1.2 | `pipster-1.0.0+mc26.1-26.1.2-fabric.jar` | `pipster-1.0.0+mc26.1.2-neoforge.jar` |
+| 26.2 | `pipster-1.0.0+mc26.2-fabric.jar` | `pipster-1.0.0+mc26.2-neoforge.jar` |
+| 26.3 | `pipster-1.0.0+mc26.3-fabric.jar` | `pipster-1.0.0+mc26.3-neoforge.jar` ¹ |
 
-| Minecraft | Fabric | NeoForge | Status |
-|---|---|---|---|
-| 1.21.1 | ✅ | ✅ | tested, benchmarked |
-| 1.21.2 | ✅ | ✅ (NeoForge beta) | tested |
-| 1.21.3 | ✅ | ✅ | tested |
-| 1.21.4 | ✅ | ✅ | tested |
-| 1.21.5 | ✅ | ✅ | tested |
-| 1.21.6, 1.21.7 | ✅ | ✅ (NeoForge beta) | tested |
-| 1.21.8 | ✅ | ✅ | tested |
-| 1.21.9 – 1.21.11 | ⏳ | ⏳ | port in progress |
-| 26.1, 26.1.1 | ✅ | ✅ (NeoForge beta) | tested |
-| 26.1.2 | ✅ | ✅ | tested |
-| 26.2 | ✅ | ✅ | tested |
-| 26.3 | ✅ | ✅ (NeoForge beta) | tested |
+¹ For some of these Minecraft versions NeoForge only had beta builds on the test date (1.21.2,
+1.21.6, 1.21.7, 1.21.9, 26.1, 26.1.1, 26.3). The jar was tested with that beta.
 
-"NeoForge beta" means that NeoForge had only beta builds for that Minecraft version on the test
-date. The exact loader, Fabric API and NeoForge versions used for every test are listed in the
-wiki under [Supported Versions](../../wiki/Supported-Versions).
+"Tested" means, for every listed version: client and dedicated server started, and all automated
+game tests passed (item, fluid, energy and gas transport, throughput limits, filters, tesseracts,
+claims and teams, break/place with buffered contents, save/load, network packet checks), on both
+loaders. The integrations were started with the real mods on every version where those exist.
+On top of that, every row was played by hand before the release. The exact loader versions are
+listed in the wiki under [Supported Versions](../../wiki/Supported-Versions).
 
 ## Performance
 
 Pipster does no work per pipe per tick. It keeps one transport graph per dimension and
 resource type on the server, rebuilds it in bounded steps, and never loads chunks. On the
-benchmark machine (Intel Core i7-13700H, Java 21, dedicated server, Minecraft 1.21.1):
+benchmark machine (Intel Core i7-13700H, dedicated server, Minecraft 1.21.1 and 26.3, both
+loaders):
 
 | Scene | Pipster time per tick (p95) |
 |---|---|
 | 10,000 idle pipes | about 0.01 ms |
 | 10,000 pipes, 100 active ports | 0.8 – 1.4 ms |
-| 50,000 pipes, 500 active ports | 4.4 – 5.2 ms |
+| 50,000 pipes, 500 active ports | 3.7 – 5.2 ms |
+| network that splits and merges every second | 0.03 – 0.05 ms |
 
 These numbers hold for that machine and those scenes only. They are no guarantee of 20 TPS on
 other hardware or in other worlds. The method is described in the wiki under
@@ -141,13 +160,15 @@ other hardware or in other worlds. The method is described in the wiki under
 * Tesseract channels only work while all involved chunks are loaded. Pipster never loads chunks
   on its own.
 * Creative pick-block never copies buffered resources or filter cards.
+* With a claim mod installed, pipes respect claims; with a team mod, teammates share ownership;
+  with a permission mod, the admin rights can be given per player (see above).
 * Server settings live in `config/pipster-server.properties` (see the
   [wiki](../../wiki/Configuration)).
 
 ## Downloads
 
-* Modrinth: *(link follows with the first release)*
-* CurseForge: *(link follows with the first release)*
+[Modrinth](https://modrinth.com/project/pipster)
+[CurseForge](https://www.curseforge.com/minecraft/mc-mods/pipster/)
 
 Please download Pipster only from these pages. Pick the file for your exact Minecraft version
 and loader.
@@ -155,14 +176,14 @@ and loader.
 ## Documentation
 
 * [Wiki](../../wiki): how to play, recipes, tesseracts, configuration, FAQ
-* [API for mod developers](api/README.md): gas handlers, endpoint providers, Maven coordinates
+* [API for mod developers](api/README.md): gas handlers, endpoint providers, CC: Tweaked methods
 
 ## Reporting bugs
 
 Please open an [issue](../../issues/new/choose) with:
 
 * Minecraft version, loader (Fabric/NeoForge) and loader version
-* the Pipster jar name (it contains the Minecraft version)
+* the Pipster jar name (it contains the Minecraft version or range)
 * the other mods involved, if the problem is with a specific machine
 * `logs/latest.log`, and a crash report if there is one
 

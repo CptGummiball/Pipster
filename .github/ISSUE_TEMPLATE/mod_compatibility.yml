@@ -10,6 +10,11 @@ body:
         Known limits, no need to report:
         * **Mekanism chemicals** are not supported yet.
         * **Fabric energy is push-based:** the port at a generator must be set to **Extract** or **Both**.
+        * **Cauldrons** only work with Precision fluid pipes or better (they give out whole levels only).
+        * **NeoForge 26.3:** the current CC: Tweaked and Open Parties and Claims builds do not start on NeoForge 26.3.0.37-beta themselves.
+        * **Jade on 1.21.2** crashes dedicated servers on its own (Jade 16.0.x).
+
+        Problems with Pipster's built-in support for Jade, CC: Tweaked, Open Parties and Claims, FTB Chunks, FTB Teams or permission mods are welcome here.
 
   - type: input
     id: othermod
@@ -67,7 +72,7 @@ body:
     id: versions
     attributes:
       label: Pipster jar and loader version
-      placeholder: "pipster-0.1.0+mc1.21.1-neoforge.jar, NeoForge 21.1.252"
+      placeholder: "pipster-1.0.0+mc1.21.1-neoforge.jar, NeoForge 21.1.252"
     validations:
       required: true
 
@@ -93,6 +98,7 @@ body:
         - It connects, but nothing moves
         - It moves, but the wrong things or wrong amounts
         - The port shows "Quarantined: faulty foreign handler"
+        - 'The port shows "Protected by a claim" although it should not'
         - Resources are lost or duplicated
         - Crash
         - Something else
