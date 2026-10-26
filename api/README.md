@@ -123,8 +123,12 @@ A gas pipe network carries exactly one gas domain at a time. The first successfu
 * `pipster:fluid_gas`: fluids in the fluid tag `#pipster:gaseous` (a datapack can add fluids;
   default empty). These go through gas pipes instead of fluid pipes.
 
-Pipster never converts between domains, even for identical ids. Mekanism chemicals are not
-supported yet.
+* `mekanism:chemical` (since 1.1.0, NeoForge 1.21.1 with Mekanism): Mekanism chemicals through
+  Mekanism's own `mekanism:chemical_handler` capability. Nothing to do for mod developers; Mekanism
+  blocks and blocks that offer that capability work directly.
+
+Pipster never converts between domains, even for identical ids. The API is unchanged in 1.1.0:
+mods built against `pipster-api-1` keep working.
 
 ## 3. Endpoint providers
 
@@ -153,6 +157,9 @@ PipsterEndpointProviders.register(new TransportEndpointProvider<PipsterEndpointP
 ## 4. Datapack hooks
 
 * Fluid tag `#pipster:gaseous`: see [Domains](#domains).
+* Block tag `#pipster:energy_no_insert` (1.1.0): ports never push energy into these blocks.
+* Block tag `#pipster:extract_warning` (1.1.0): extract ports at these blocks warn that they may
+  pull storage media out.
 * All recipes are normal datapack recipes. Upgrade recipes use the recipe type
   `pipster:empty_contents_shaped`: a shaped recipe that refuses ingredients which still carry
   buffered contents or block data.
@@ -163,7 +170,7 @@ These work without any code in your mod. They are only active when the other mod
 
 ### CC: Tweaked
 
-Conduits and tesseracts are a generic peripheral with the additional type `pipster`
+Conduits, tesseracts and pulse amplifiers are a generic peripheral with the additional type `pipster`
 (`peripheral.find("pipster")`). Reading is always possible. Switching needs the port's (or
 tesseract side's) redstone mode **Computer**, which a player with build rights sets in the port
 screen. Channel names are never exposed, and channels cannot be selected from Lua. All methods run
@@ -178,10 +185,12 @@ on the server thread and stay within the one block.
 | `setPortMode(side, mode)` (conduit) | `insert`, `extract`, `both`, `disabled` (redstone mode "computer" only) |
 | `getTesseract()` (tesseract) | `{quantum, item/fluid/gas/energy = {bound, sides = {side = {mode, status, ...}}}}` |
 | `setSideEnabled(kind, side, enabled)` (tesseract) | switches a side on or off (redstone mode "computer" only) |
+| `getAmplifier()` (pulse amplifier, 1.1.0) | `{stored, capacity, input, output, efficiency, banks, banksShared, pulseLimit, target, mode, status, fired}`, read only; `mode` is `auto`, `charge` or `burst`, `status` is `charging`, `ready`, `bursting` or `depleted` |
 
 Sides are `down`, `up`, `north`, `south`, `west`, `east`. Amounts use display units (items, mB,
 E). Status values are the port statuses in lower case, for example `active`, `source_empty`,
-`targets_full`, `claim_protected`, `computer_off`.
+`targets_full`, `claim_protected`, `computer_off`, and since 1.1.0 `accept_only` (an accept port: it only takes
+what the neighbour pushes in).
 
 ### Permission nodes
 
@@ -199,6 +208,13 @@ conduits. Your mod does not need to do anything for this.
 
 * `c:tools/wrench` contains `pipster:conduit_wrench`. Pipster's own actions still require the
   Conduit Wrench.
+
+### Blocks that push without a storage of their own
+
+If your block pushes items or fluids into neighbours but offers no handler on that side, players
+can set the Pipster pipe side to **Accept** (1.1.0). The pipe then offers its normal insert handler
+there, and your push arrives as usual. Pipster also sends one neighbour update to your block when
+a pipe side starts or stops accepting, so cached neighbour lookups stay current.
 
 ## 6. Stability
 

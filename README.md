@@ -66,7 +66,7 @@ measured results.
 ![The Conduit Wrench](images/headers/wrench.png)
 
 * **Right-click a port:** mode (insert, extract, both, off), redstone control, priority, distribution (round robin,
-  nearest first, sticky). The status line says why nothing moves, for example "Source only pushes – set the port
+  nearest first, sticky). The status line says why nothing moves, for example "Machine only gives: set this port
   to Extract".
 * **Accept port (new in 1.1.0):** a side next to a block that pushes but offers no storage of its own (AE2 Export
   Bus, Create funnels, Oritech item and fluid pipes) can be set to **Accept**. It takes what the block pushes in and
@@ -109,7 +109,7 @@ only possible while the store lasts.
 * **Modes:** Auto (gives whenever something takes), Charge (gives nothing), Pulse (full power while fired by
   redstone or the Fire button; starts from 10 % charge, after an empty pulse only again when Ready).
 * **Screen:** stored and capacity, input and output per tick, efficiency, banks, pulse limit, mode, target and status
-  (Charging, Ready, Pulsing, Depleted).
+  (Charging, Ready, Pulsing, Empty).
 * **Looks and sounds:** the coil turns faster with the charge and very fast during a pulse, glowing, with sparks;
   charge lights on the pillars; sounds for activation, hum, ready, pulse and wind-down.
 * Breaking it keeps the stored energy in the item; creative pick-block never copies it.
@@ -243,15 +243,15 @@ played by hand before the release. The exact loader versions are listed in the w
 ![Performance](images/headers/performance.png)
 
 Pipster does no work per pipe per tick. It keeps one transport graph per dimension and resource type on the server,
-rebuilds it in bounded steps, and never loads chunks. Measured on an Intel Core i7-13700H (dedicated server,
-Minecraft 1.21.1 and 26.3, both loaders):
+rebuilds it in bounded steps, and never loads chunks. Measured for 1.1.0 on an Intel Core i7-13700H (dedicated
+server, Minecraft 1.21.1 and 26.3, both loaders):
 
 | Scene | Pipster time per tick (p95) |
 |---|---|
 | 10,000 idle pipes | about 0.01 ms |
-| 10,000 pipes, 100 active ports | 0.8 – 1.4 ms |
-| 50,000 pipes, 500 active ports | 3.7 – 5.2 ms |
-| network that splits and merges every second | 0.03 – 0.05 ms |
+| 10,000 pipes, 100 active ports | 0.8 – 1.2 ms |
+| 50,000 pipes, 500 active ports | 3.4 – 5.0 ms |
+| network that splits and merges every second | 0.02 – 0.07 ms |
 
 These numbers hold for that machine and those scenes only. They are no guarantee of 20 TPS on other hardware or in
 other worlds. The method is described in the wiki under [Performance](../../wiki/Performance).
