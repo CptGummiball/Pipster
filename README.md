@@ -18,9 +18,10 @@
   <a href="#license">License</a>
 </p>
 
-> **Version 1.1.0 "Overcharge".** For Minecraft 1.21.1 to 26.3 on Fabric and NeoForge; see
-> [Version status](#version-status). Worlds from 1.0.0 load without changes, and mods built against
-> the Pipster API keep working.
+> **Version 1.2.0.** For Minecraft 1.21.1 to 26.3 on Fabric and NeoForge; see
+> [Version status](#version-status). New: the Singularity Energy Cable, a creative-only energy cable,
+> a filter field with suggestions for fluid and gas pipes, and less server time per tick. Worlds from
+> 1.1.0 and 1.0.0 load without changes, and mods built against the Pipster API keep working.
 
 This repository holds the documentation, the [wiki](../../wiki), the [issue tracker](../../issues) and the
 [API for mod developers](api/README.md). The mod itself is downloaded from Modrinth or CurseForge. Pipster is not
@@ -36,15 +37,16 @@ like a pipe (no full blocks), and everything you configure lives directly at the
 
 * **Four transport kinds:** item pipes, fluid pipes, gas pipes and energy cables. Different kinds never connect to
   each other.
-* **Five tiers:** Copper, Reinforced, Precision, Resonant and Quantum. Upgrade pipes in place with an upgrade bolt;
-  the pipe keeps its settings and contents.
+* **Five tiers:** Copper, Reinforced, Precision, Resonant and Quantum, plus the Singularity tier for energy cables.
+  Upgrade pipes in place with an upgrade bolt; the pipe keeps its settings and contents.
 * **Configure ports with the Conduit Wrench:** mode, redstone control, priority, distribution and copy/paste
   profiles.
 * **Filter cards instead of filter blocks:** put a card into the port itself.
 * **Tesseracts:** send resources through named channels, in one dimension or across all of them.
 * **Overcharge:** the Energy Pulse Amplifier stores energy and releases it in short, powerful pulses.
 * **Honest throughput:** every pipe segment has one shared per-tick budget. A single Copper segment limits a whole
-  path, even between Quantum ports. There is no creative tier that ignores limits.
+  path, even between Quantum ports. Nothing ignores limits: even the creative-only energy cable has a finite rate,
+  and a thinner cable between two of them keeps its own limit.
 
 ![All 64 connection shapes of item pipes](images/02-item-pipe-shapes.jpg)
 
@@ -61,6 +63,14 @@ measured results.
 | T3 Precision | 32 | 1,600 | 1,600 | 64,000 | 64 |
 | T4 Resonant | 128 | 6,400 | 6,400 | 512,000 | 256 |
 | T5 Quantum | 512 | 25,600 | 25,600 | 4,096,000 | 1,024 |
+| T6 Singularity (energy only) | – | – | – | 32,768,000 | – |
+| Supercalifragilisticexpialidocious Energy Cable (creative only) | – | – | – | 1,000,000,000,000 | – |
+
+* **Singularity Energy Cable (new in 1.2.0):** eight times the Quantum cable, energy only. Upgrade Quantum Energy
+  Cables with a Singularity Upgrade Bolt or by crafting.
+* **Supercalifragilisticexpialidocious Energy Cable (new in 1.2.0):** creative mode only. No recipe, no upgrade path,
+  and it drops nothing when broken (energy buffered in it is lost). Machines of other mods still decide how much
+  they accept.
 
 <a id="the-conduit-wrench"></a>
 ![The Conduit Wrench](images/headers/wrench.png)
@@ -87,6 +97,11 @@ measured results.
 
 Patterns are ghost items: nothing is used up.
 
+**New in 1.2.0:** fluid and gas pipes have a filter field with suggestions. Type a name or an id and pick a fluid,
+gas or (with Mekanism on NeoForge 1.21.1) chemical from the list; no filled container needed. `#` lists the tags of
+the pipe's type, "Everything from <mod>" covers a whole mod, and entries with the same name show their mod in
+brackets. The server checks that every entry fits the pipe.
+
 <a id="tesseracts"></a>
 ![Tesseracts](images/headers/tesseracts.png)
 
@@ -103,7 +118,7 @@ and releases it for a short time at a higher rate than it takes. It never create
 only possible while the store lasts.
 
 * **Front = output**, every other side = input. The amplifier pushes into the cable at its front and respects that
-  cable's budget, so a thin cable limits the pulse.
+  cable's budget, so a thin cable limits the pulse. On Singularity and creative cables its own pulse limit applies.
 * **Capacitor Banks** next to it (or next to another bank of the group) add capacity and pulse power, up to 8 banks.
   A bank group that touches two amplifiers counts for neither.
 * **Modes:** Auto (gives whenever something takes), Charge (gives nothing), Pulse (full power while fired by
@@ -216,21 +231,21 @@ lists before it is released.
 
 | Minecraft | Fabric jar | NeoForge jar |
 |---|---|---|
-| 1.21.1 | `pipster-1.1.0+mc1.21.1-fabric.jar` | `pipster-1.1.0+mc1.21.1-neoforge.jar` |
-| 1.21.2 – 1.21.4 | `pipster-1.1.0+mc1.21.2-1.21.4-fabric.jar` | `pipster-1.1.0+mc1.21.2-1.21.4-neoforge.jar` ¹ |
-| 1.21.5 | `pipster-1.1.0+mc1.21.5-fabric.jar` | `pipster-1.1.0+mc1.21.5-neoforge.jar` |
-| 1.21.6 – 1.21.8 | `pipster-1.1.0+mc1.21.6-1.21.8-fabric.jar` | `pipster-1.1.0+mc1.21.6-1.21.8-neoforge.jar` ¹ |
-| 1.21.9 | `pipster-1.1.0+mc1.21.9-1.21.10-fabric.jar` | `pipster-1.1.0+mc1.21.9-neoforge.jar` ¹ |
-| 1.21.10 | `pipster-1.1.0+mc1.21.9-1.21.10-fabric.jar` | `pipster-1.1.0+mc1.21.10-neoforge.jar` |
-| 1.21.11 | `pipster-1.1.0+mc1.21.11-fabric.jar` | `pipster-1.1.0+mc1.21.11-neoforge.jar` |
-| 26.1, 26.1.1 | `pipster-1.1.0+mc26.1-26.1.2-fabric.jar` | `pipster-1.1.0+mc26.1-26.1.1-neoforge.jar` ¹ |
-| 26.1.2 | `pipster-1.1.0+mc26.1-26.1.2-fabric.jar` | `pipster-1.1.0+mc26.1.2-neoforge.jar` ² |
-| 26.2 | `pipster-1.1.0+mc26.2-fabric.jar` | `pipster-1.1.0+mc26.2-neoforge.jar` ² |
-| 26.3 | `pipster-1.1.0+mc26.3-fabric.jar` | `pipster-1.1.0+mc26.3-neoforge.jar` ² |
+| 1.21.1 | `pipster-1.2.0+mc1.21.1-fabric.jar` | `pipster-1.2.0+mc1.21.1-neoforge.jar` |
+| 1.21.2 – 1.21.4 | `pipster-1.2.0+mc1.21.2-1.21.4-fabric.jar` | `pipster-1.2.0+mc1.21.2-1.21.4-neoforge.jar` ¹ |
+| 1.21.5 | `pipster-1.2.0+mc1.21.5-fabric.jar` | `pipster-1.2.0+mc1.21.5-neoforge.jar` |
+| 1.21.6 – 1.21.8 | `pipster-1.2.0+mc1.21.6-1.21.8-fabric.jar` | `pipster-1.2.0+mc1.21.6-1.21.8-neoforge.jar` ¹ |
+| 1.21.9 | `pipster-1.2.0+mc1.21.9-1.21.10-fabric.jar` | `pipster-1.2.0+mc1.21.9-neoforge.jar` ¹ |
+| 1.21.10 | `pipster-1.2.0+mc1.21.9-1.21.10-fabric.jar` | `pipster-1.2.0+mc1.21.10-neoforge.jar` |
+| 1.21.11 | `pipster-1.2.0+mc1.21.11-fabric.jar` | `pipster-1.2.0+mc1.21.11-neoforge.jar` |
+| 26.1, 26.1.1 | `pipster-1.2.0+mc26.1-26.1.2-fabric.jar` | `pipster-1.2.0+mc26.1-26.1.1-neoforge.jar` ¹ |
+| 26.1.2 | `pipster-1.2.0+mc26.1-26.1.2-fabric.jar` | `pipster-1.2.0+mc26.1.2-neoforge.jar` ² |
+| 26.2 | `pipster-1.2.0+mc26.2-fabric.jar` | `pipster-1.2.0+mc26.2-neoforge.jar` ² |
+| 26.3 | `pipster-1.2.0+mc26.3-fabric.jar` | `pipster-1.2.0+mc26.3-neoforge.jar` ² |
 
 ¹ For these Minecraft versions NeoForge only had beta builds on the test date (1.21.2, 1.21.6, 1.21.7, 1.21.9, 26.1,
 26.1.1). The jar was tested with that beta.<br>
-² New in 1.1.0: needs at least NeoForge 26.1.2.122, 26.2.0.93 or 26.3.0.97 (current partner mods need these builds).
+² Needs at least NeoForge 26.1.2.122, 26.2.0.93 or 26.3.0.97 (since 1.1.0; current partner mods need these builds).
 
 "Tested" means, for every listed version: client and dedicated server started, and all automated game tests passed
 (item, fluid, energy and gas transport, throughput limits, filters, tesseracts, the pulse amplifier, claims and
@@ -252,6 +267,10 @@ server, Minecraft 1.21.1 and 26.3, both loaders):
 | 10,000 pipes, 100 active ports | 0.8 – 1.2 ms |
 | 50,000 pipes, 500 active ports | 3.4 – 5.0 ms |
 | network that splits and merges every second | 0.02 – 0.07 ms |
+
+**1.2.0 compared with 1.1.0** (same machine, 50,000 pipes with 500 active ports, both versions in alternating runs):
+8 to 11 % less time per tick on 1.21.1 (both loaders) and 26.3 Fabric, no measurable change on 26.3 NeoForge, and
+less than half the memory per tick on 1.21.1 Fabric. Details in the wiki under [Performance](../../wiki/Performance).
 
 These numbers hold for that machine and those scenes only. They are no guarantee of 20 TPS on other hardware or in
 other worlds. The method is described in the wiki under [Performance](../../wiki/Performance).

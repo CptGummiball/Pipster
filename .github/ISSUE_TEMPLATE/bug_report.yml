@@ -50,7 +50,7 @@ body:
     attributes:
       label: Pipster jar and loader version
       description: The exact file name of the Pipster jar, and the Fabric Loader + Fabric API or NeoForge version.
-      placeholder: "pipster-1.0.0+mc26.2-fabric.jar, Fabric Loader 0.19.5, Fabric API 0.161.0+26.2"
+      placeholder: "pipster-1.2.0+mc26.2-fabric.jar, Fabric Loader 0.19.5, Fabric API 0.161.0+26.2"
     validations:
       required: true
 
