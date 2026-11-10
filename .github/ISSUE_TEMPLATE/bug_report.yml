@@ -13,25 +13,14 @@ body:
     id: minecraft
     attributes:
       label: Minecraft version
-      description: The Pipster jar name contains the Minecraft version (or range) it is made for.
+      description: The Pipster jar name contains the Minecraft version it is made for. Pipster 1.3.0 is made for the versions below; on any other version you use Pipster 1.2.0, so pick the last option and write your version below.
       options:
         - "1.21.1"
-        - "1.21.2"
-        - "1.21.3"
-        - "1.21.4"
-        - "1.21.5"
-        - "1.21.6"
-        - "1.21.7"
-        - "1.21.8"
-        - "1.21.9"
-        - "1.21.10"
         - "1.21.11"
-        - "26.1"
-        - "26.1.1"
         - "26.1.2"
         - "26.2"
         - "26.3"
-        - "other (write it below)"
+        - "Other (Pipster 1.2.0)"
     validations:
       required: true
 
@@ -50,7 +39,7 @@ body:
     attributes:
       label: Pipster jar and loader version
       description: The exact file name of the Pipster jar, and the Fabric Loader + Fabric API or NeoForge version.
-      placeholder: "pipster-1.2.0+mc26.2-fabric.jar, Fabric Loader 0.19.5, Fabric API 0.161.0+26.2"
+      placeholder: "pipster-1.3.0+mc26.2-fabric.jar, Fabric Loader 0.19.5, Fabric API 0.161.0+26.2"
     validations:
       required: true
 

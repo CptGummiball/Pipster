@@ -18,10 +18,11 @@
   <a href="#license">License</a>
 </p>
 
-> **Version 1.2.0.** For Minecraft 1.21.1 to 26.3 on Fabric and NeoForge; see
-> [Version status](#version-status). New: the Singularity Energy Cable, a creative-only energy cable,
-> a filter field with suggestions for fluid and gas pipes, and less server time per tick. Worlds from
-> 1.1.0 and 1.0.0 load without changes, and mods built against the Pipster API keep working.
+> **Version 1.3.0.** For Minecraft 1.21.1, 1.21.11, 26.1.2, 26.2 and 26.3 on Fabric and NeoForge; see
+> [Version status](#version-status). New: a new look for all pipes and cables (the tube shows the kind, the
+> node and flange show the tier), and the port screen's status line now updates while it is open. Worlds from
+> 1.2.0 load without changes, and mods built against the Pipster API keep working. For other Minecraft
+> versions, Pipster 1.2.0 stays available.
 
 This repository holds the documentation, the [wiki](../../wiki), the [issue tracker](../../issues) and the
 [API for mod developers](api/README.md). The mod itself is downloaded from Modrinth or CurseForge. Pipster is not
@@ -53,22 +54,31 @@ like a pipe (no full blocks), and everything you configure lives directly at the
 <a id="pipes-and-tiers"></a>
 ![Pipes and Tiers](images/headers/tiers.png)
 
+**How to recognise them (new look in 1.3.0):** the tube shows the kind, the node and the flange show the tier.
+
+* **Item pipe:** square copper tube. **Fluid pipe:** round iron-grey tube. **Gas pipe:** round petrol (dark teal)
+  tube. **Energy cable:** narrower square anthracite cable with fine insulation rings.
+* The **node** is the chamfered cube in the middle; it and the flange have the tier colour (table below).
+* A **flange with four bolts** only where a pipe meets a machine; between two pipes a slim coupling; open sides show
+  only the node. Pipes stay narrow, never full blocks, and the hitbox follows the pipe.
+* Throughput, tiers, recipes and behaviour did not change with the new look.
+
 Rates are per pipe segment and tick, shared by all transfers through that segment. They are balance values, not
 measured results.
 
-| Tier | Items/t | Fluid mB/t | Gas units/t | Energy E/t | Item batch |
-|---|---:|---:|---:|---:|---:|
-| T1 Copper | 2 | 100 | 100 | 1,000 | 8 |
-| T2 Reinforced | 8 | 400 | 400 | 8,000 | 32 |
-| T3 Precision | 32 | 1,600 | 1,600 | 64,000 | 64 |
-| T4 Resonant | 128 | 6,400 | 6,400 | 512,000 | 256 |
-| T5 Quantum | 512 | 25,600 | 25,600 | 4,096,000 | 1,024 |
-| T6 Singularity (energy only) | – | – | – | 32,768,000 | – |
-| Supercalifragilisticexpialidocious Energy Cable (creative only) | – | – | – | 1,000,000,000,000 | – |
+| Tier | Node and flange | Items/t | Fluid mB/t | Gas units/t | Energy E/t | Item batch |
+|---|---|---:|---:|---:|---:|---:|
+| T1 Copper | copper | 2 | 100 | 100 | 1,000 | 8 |
+| T2 Reinforced | gold | 8 | 400 | 400 | 8,000 | 32 |
+| T3 Precision | emerald green | 32 | 1,600 | 1,600 | 64,000 | 64 |
+| T4 Resonant | lapis blue | 128 | 6,400 | 6,400 | 512,000 | 256 |
+| T5 Quantum | amethyst purple | 512 | 25,600 | 25,600 | 4,096,000 | 1,024 |
+| T6 Singularity (energy only) | redstone red | – | – | – | 32,768,000 | – |
+| Supercalifragilisticexpialidocious Energy Cable (creative only) | magenta, white bolts | – | – | – | 1,000,000,000,000 | – |
 
-* **Singularity Energy Cable (new in 1.2.0):** eight times the Quantum cable, energy only. Upgrade Quantum Energy
+* **Singularity Energy Cable (since 1.2.0):** eight times the Quantum cable, energy only. Upgrade Quantum Energy
   Cables with a Singularity Upgrade Bolt or by crafting.
-* **Supercalifragilisticexpialidocious Energy Cable (new in 1.2.0):** creative mode only. No recipe, no upgrade path,
+* **Supercalifragilisticexpialidocious Energy Cable (since 1.2.0):** creative mode only. No recipe, no upgrade path,
   and it drops nothing when broken (energy buffered in it is lost). Machines of other mods still decide how much
   they accept.
 
@@ -77,7 +87,7 @@ measured results.
 
 * **Right-click a port:** mode (insert, extract, both, off), redstone control, priority, distribution (round robin,
   nearest first, sticky). The status line says why nothing moves, for example "Machine only gives: set this port
-  to Extract".
+  to Extract". Since 1.3.0 it updates while the screen is open.
 * **Accept port (new in 1.1.0):** a side next to a block that pushes but offers no storage of its own (AE2 Export
   Bus, Create funnels, Oritech item and fluid pipes) can be set to **Accept**. It takes what the block pushes in and
   never pulls.
@@ -97,7 +107,7 @@ measured results.
 
 Patterns are ghost items: nothing is used up.
 
-**New in 1.2.0:** fluid and gas pipes have a filter field with suggestions. Type a name or an id and pick a fluid,
+**Since 1.2.0:** fluid and gas pipes have a filter field with suggestions. Type a name or an id and pick a fluid,
 gas or (with Mekanism on NeoForge 1.21.1) chemical from the list; no filled container needed. `#` lists the tags of
 the pipe's type, "Everything from <mod>" covers a whole mod, and entries with the same name show their mod in
 brackets. The server checks that every entry fits the pipe.
@@ -178,13 +188,14 @@ content mod.
 Mod developers find the exact interfaces per version in the [API documentation](api/README.md).
 
 **Tested with the real mods** (dedicated server, client and all game tests; the game tests also send items, fluids
-and energy through real blocks of these mods and back, and check that nothing is lost or created):
+and energy through real blocks of these mods and back, and check that nothing is lost or created). The table shows
+the runs with the 1.3.0 files (release check 2026-11-08; same result as 1.2.0 on these Minecraft versions).
 
 | Mod | Where | What is checked |
 |---|---|---|
-| Storage Drawers | 1.21.1 – 26.3, both loaders | drawers and compacting drawers (no duplication) |
-| Sophisticated Storage | NeoForge 1.21.1 – 26.3; Fabric 1.21.1 (unofficial port) | barrels |
-| Energized Power | 1.21.1 – 26.3, both loaders | battery box, fluid tank |
+| Storage Drawers | all five versions, both loaders | drawers and compacting drawers (no duplication) |
+| Sophisticated Storage | NeoForge, all five versions; Fabric 1.21.1 (unofficial port) | barrels |
+| Energized Power | all five versions, both loaders | battery box, fluid tank |
 | Oritech | 1.21.1 both loaders; NeoForge 26.1.2 (beta) | energy storage, tank |
 | Powah! | NeoForge 1.21.1; 26.1.2 (alpha) | energy cell |
 | Mekanism | NeoForge 1.21.1 | energy cube, fluid tank, chemicals through gas pipes |
@@ -192,8 +203,8 @@ and energy through real blocks of these mods and back, and check that nothing is
 | Applied Energistics 2 | NeoForge 1.21.1 (with Applied Mekanistics), 26.1.2 – 26.3 | starts and runs together |
 | Immersive Machinery | 1.21.1, 26.1.2, 26.2, both loaders | starts and runs together (it has no blocks to connect) |
 
-"Where" lists the Minecraft versions on which the run was made; not every version in a range has a run. That is not
-a promise that every mod or every block works; please [report problems](#reporting-bugs).
+"Where" lists the Minecraft versions on which the run was made. That is not a promise that every mod or every block
+works; please [report problems](#reporting-bugs).
 
 What else to know:
 
@@ -226,40 +237,39 @@ The Conduit Wrench is also tagged `c:tools/wrench`, so other mods recognise it a
 <a id="version-status"></a>
 ![Version Status](images/headers/versions.png)
 
-Some jars cover several Minecraft versions; such a jar is started and tested unchanged on **every** version it
-lists before it is released.
+Pipster 1.3.0 has one jar per Minecraft version and loader; no jar covers several Minecraft versions.
 
 | Minecraft | Fabric jar | NeoForge jar |
 |---|---|---|
-| 1.21.1 | `pipster-1.2.0+mc1.21.1-fabric.jar` | `pipster-1.2.0+mc1.21.1-neoforge.jar` |
-| 1.21.2 – 1.21.4 | `pipster-1.2.0+mc1.21.2-1.21.4-fabric.jar` | `pipster-1.2.0+mc1.21.2-1.21.4-neoforge.jar` ¹ |
-| 1.21.5 | `pipster-1.2.0+mc1.21.5-fabric.jar` | `pipster-1.2.0+mc1.21.5-neoforge.jar` |
-| 1.21.6 – 1.21.8 | `pipster-1.2.0+mc1.21.6-1.21.8-fabric.jar` | `pipster-1.2.0+mc1.21.6-1.21.8-neoforge.jar` ¹ |
-| 1.21.9 | `pipster-1.2.0+mc1.21.9-1.21.10-fabric.jar` | `pipster-1.2.0+mc1.21.9-neoforge.jar` ¹ |
-| 1.21.10 | `pipster-1.2.0+mc1.21.9-1.21.10-fabric.jar` | `pipster-1.2.0+mc1.21.10-neoforge.jar` |
-| 1.21.11 | `pipster-1.2.0+mc1.21.11-fabric.jar` | `pipster-1.2.0+mc1.21.11-neoforge.jar` |
-| 26.1, 26.1.1 | `pipster-1.2.0+mc26.1-26.1.2-fabric.jar` | `pipster-1.2.0+mc26.1-26.1.1-neoforge.jar` ¹ |
-| 26.1.2 | `pipster-1.2.0+mc26.1-26.1.2-fabric.jar` | `pipster-1.2.0+mc26.1.2-neoforge.jar` ² |
-| 26.2 | `pipster-1.2.0+mc26.2-fabric.jar` | `pipster-1.2.0+mc26.2-neoforge.jar` ² |
-| 26.3 | `pipster-1.2.0+mc26.3-fabric.jar` | `pipster-1.2.0+mc26.3-neoforge.jar` ² |
+| 1.21.1 | `pipster-1.3.0+mc1.21.1-fabric.jar` | `pipster-1.3.0+mc1.21.1-neoforge.jar` |
+| 1.21.11 | `pipster-1.3.0+mc1.21.11-fabric.jar` | `pipster-1.3.0+mc1.21.11-neoforge.jar` |
+| 26.1.2 | `pipster-1.3.0+mc26.1.2-fabric.jar` | `pipster-1.3.0+mc26.1.2-neoforge.jar` ¹ |
+| 26.2 | `pipster-1.3.0+mc26.2-fabric.jar` | `pipster-1.3.0+mc26.2-neoforge.jar` ¹ |
+| 26.3 | `pipster-1.3.0+mc26.3-fabric.jar` | `pipster-1.3.0+mc26.3-neoforge.jar` ¹ |
 
-¹ For these Minecraft versions NeoForge only had beta builds on the test date (1.21.2, 1.21.6, 1.21.7, 1.21.9, 26.1,
-26.1.1). The jar was tested with that beta.<br>
-² Needs at least NeoForge 26.1.2.122, 26.2.0.93 or 26.3.0.97 (since 1.1.0; current partner mods need these builds).
+¹ Needs at least NeoForge 26.1.2.122, 26.2.0.93 or 26.3.0.97 (since 1.1.0; current partner mods need these builds).
 
-"Tested" means, for every listed version: client and dedicated server started, and all automated game tests passed
-(item, fluid, energy and gas transport, throughput limits, filters, tesseracts, the pulse amplifier, claims and
-teams, break/place with stored contents, save/load, network packet checks), on both loaders. The integrations and
-partner mods above were started with the real mods on every version where those exist. On top of that, every row is
-played by hand before the release. The exact loader versions are listed in the wiki under
-[Supported Versions](../../wiki/Supported-Versions).
+**Other Minecraft versions** (1.21.2 – 1.21.10, 26.1, 26.1.1): use Pipster 1.2.0. It stays available and keeps
+working. Builds for further versions only come back if enough players ask for them in the
+[issue tracker](../../issues).
+
+Before a jar is released, it is tested on its Minecraft version: client and dedicated server started, and all
+automated game tests (item, fluid, energy and gas transport, throughput limits, filters, tesseracts, the pulse
+amplifier, claims and teams, break/place with stored contents, save/load, network packet checks), plus runs with the
+integrations and partner mods above wherever those exist.
+All ten 1.3.0 files passed this release check on 2026-11-08: 188 runs passed, none failed; 12 runs could not take place for reasons outside Pipster (Open Parties and Claims cannot start on a game-test server and is checked on the dedicated server instead; CC: Tweaked 1.120.3 does not start on NeoForge 26.3).
+The exact loader versions are listed in the wiki under [Supported Versions](../../wiki/Supported-Versions).
 
 <a id="performance"></a>
 ![Performance](images/headers/performance.png)
 
 Pipster does no work per pipe per tick. It keeps one transport graph per dimension and resource type on the server,
-rebuilds it in bounded steps, and never loads chunks. Measured for 1.1.0 on an Intel Core i7-13700H (dedicated
-server, Minecraft 1.21.1 and 26.3, both loaders):
+rebuilds it in bounded steps, and never loads chunks.
+
+**1.3.0 was not measured again:** it only changes models, textures and the refresh of the port screen; the transport
+code did not change in a way that matters for performance. All numbers below were measured with older versions.
+
+Measured for 1.1.0 on an Intel Core i7-13700H (dedicated server, Minecraft 1.21.1 and 26.3, both loaders):
 
 | Scene | Pipster time per tick (p95) |
 |---|---|
@@ -291,7 +301,7 @@ Please download Pipster only from these pages. Pick the file for your exact Mine
 Please open an [issue](../../issues/new/choose) with:
 
 * Minecraft version, loader (Fabric/NeoForge) and loader version
-* the Pipster jar name (it contains the Minecraft version or range)
+* the Pipster jar name (it contains the Pipster and Minecraft version)
 * the other mods involved, if the problem is with a specific machine
 * `logs/latest.log`, and a crash report if there is one
 

@@ -41,21 +41,25 @@ API and to publish mods that use it. It does not allow modifying or redistributi
 
 ## 1. Interfaces Pipster uses
 
-| Resource | Fabric (all versions) | NeoForge 1.21.1 – 1.21.8 | NeoForge 1.21.9 – 1.21.11 and 26.x |
+| Resource | Fabric (all versions) | NeoForge 1.21.1 | NeoForge 1.21.11 and 26.x |
 |---|---|---|---|
 | Items | `ItemStorage.SIDED` (`Storage<ItemVariant>`) | `Capabilities.ItemHandler.BLOCK` (`IItemHandler`) | `Capabilities.Item.BLOCK` (`ResourceHandler<ItemResource>`) |
 | Fluids | `FluidStorage.SIDED` (`Storage<FluidVariant>`) | `Capabilities.FluidHandler.BLOCK` (`IFluidHandler`) | `Capabilities.Fluid.BLOCK` (`ResourceHandler<FluidResource>`) |
 | Energy | Team Reborn Energy `EnergyStorage.SIDED` | `Capabilities.EnergyStorage.BLOCK` (`IEnergyStorage`) | `Capabilities.Energy.BLOCK` (`EnergyHandler`) |
 | Gas | Pipster `GasHandler` via `BlockApiLookup` | Pipster `GasHandler` via `BlockCapability` | Pipster `GasHandler` via `BlockCapability` |
 
-Team Reborn Energy versions Pipster was tested with: 4.1.0 (1.21.1–1.21.4), 4.2.0
-(1.21.5–1.21.11), 5.0.0 (26.x).
+Pipster 1.3.0 is made for Minecraft 1.21.1, 1.21.11, 26.1.2, 26.2 and 26.3. Pipster 1.2.0 also covers
+1.21.2 – 1.21.10, 26.1 and 26.1.1: there, NeoForge 1.21.2 – 1.21.8 uses the interfaces of the 1.21.1 column and
+NeoForge 1.21.9 and 1.21.10 those of the last column.
+
+Team Reborn Energy versions Pipster was tested with: 4.1.0 (1.21.1), 4.2.0 (1.21.11), 5.0.0 (26.x);
+Pipster 1.2.0 also 4.1.0 (1.21.2–1.21.4) and 4.2.0 (1.21.5–1.21.10).
 
 ### Semantics Pipster relies on
 
 * **Transactional APIs** (Fabric Transfer API, NeoForge `ResourceHandler`/`EnergyHandler`):
   Pipster plans a transfer in a nested transaction and commits exactly once.
-* **Simulate/execute APIs** (NeoForge `IItemHandler` etc. up to 1.21.8, Pipster `GasHandler`):
+* **Simulate/execute APIs** (NeoForge `IItemHandler` etc. on 1.21.1, Pipster `GasHandler`):
   simulations are only a hint. Pipster extracts into a buffer it owns, then inserts. Anything
   left over goes back to the source or stays in the buffer. It is never deleted.
 * **Quarantine:** handlers that return more than requested, hand out something other than
@@ -127,8 +131,8 @@ A gas pipe network carries exactly one gas domain at a time. The first successfu
   Mekanism's own `mekanism:chemical_handler` capability. Nothing to do for mod developers; Mekanism
   blocks and blocks that offer that capability work directly.
 
-Pipster never converts between domains, even for identical ids. The API is unchanged in 1.1.0:
-mods built against `pipster-api-1` keep working.
+Pipster never converts between domains, even for identical ids. The API is unchanged in 1.1.0, 1.2.0
+and 1.3.0: mods built against `pipster-api-1` keep working.
 
 ## 3. Endpoint providers
 
