@@ -1,0 +1,80 @@
+name: Version request
+description: Ask for Pipster on a Minecraft version or loader that is not supported yet.
+title: "[Version request] Minecraft "
+labels: ["version request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for asking! Pipster is made and tested for **Minecraft 1.21.1, 1.21.11, 26.1.2, 26.2 and 26.3**, each for
+        **Fabric and NeoForge**
+        Every new version means a full test round (client, dedicated server, all automated game tests, the supported
+        mods of that version), so requests with a real use help decide what comes next.
+
+        Please check the [open version requests](https://github.com/CptGummiball/Pipster/issues?q=is%3Aissue+label%3A%22version+request%22)
+        first: if your version is already asked for, give that issue a :+1: instead of opening a new one.
+
+  - type: input
+    id: minecraft
+    attributes:
+      label: Minecraft version
+      description: "The exact version you would like, e.g. 1.21.4 or 26.4."
+      placeholder: "1.21.4"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: loader
+    attributes:
+      label: Loader
+      multiple: true
+      options:
+        - Fabric
+        - NeoForge
+        - Other (write it below)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: use
+    attributes:
+      label: Where would you use it?
+      options:
+        - In a public modpack
+        - In a private modpack / with friends
+        - On a server
+        - Singleplayer
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: pack
+    attributes:
+      label: Modpack or server (optional)
+      description: "A link or name helps to see which other mods Pipster has to work with on that version."
+      placeholder: "https://www.curseforge.com/minecraft/modpacks/..."
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this version?
+      description: "For example, your pack cannot move to a supported version because a key mod is missing there."
+    validations:
+      required: true
+
+  - type: textarea
+    id: mods
+    attributes:
+      label: Mods Pipster should work with on that version (optional)
+      description: "Other mods you play together with Pipster, ideally with their versions."
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I checked the open version requests, and this version is not asked for yet.
+          required: true
+        - label: I understand that a request is not a promise; Pipster needs Pipster on the same version, too.
+          required: true
