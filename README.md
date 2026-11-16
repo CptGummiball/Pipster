@@ -18,10 +18,11 @@
   <a href="#license">License</a>
 </p>
 
-> **Version 1.3.0.** For Minecraft 1.21.1, 1.21.11, 26.1.2, 26.2 and 26.3 on Fabric and NeoForge; see
-> [Version status](#version-status). New: a new look for all pipes and cables (the tube shows the kind, the
-> node and flange show the tier), and the port screen's status line now updates while it is open. Worlds from
-> 1.2.0 load without changes, and mods built against the Pipster API keep working. For other Minecraft
+> **Version 1.4.1.** For Minecraft 1.21.1, 1.21.11, 26.1.2, 26.2 and 26.3 on Fabric and NeoForge; see
+> [Version status](#version-status). New: quicker wrench controls, separate filters for insert and extract, a
+> choice of the target block's face, pasting a profile also installs the cards from your inventory, and optional
+> support for JEI, REI, WTHIT and Flan. Minecraft 26.3 now needs Fabric API 0.165.2 or NeoForge 26.3.0.100. Worlds
+> from 1.3.0 load without conversion, and mods built against the Pipster API keep working. For other Minecraft
 > versions, Pipster 1.2.0 stays available.
 
 This repository holds the documentation, the [wiki](../../wiki), the [issue tracker](../../issues) and the
@@ -40,8 +41,9 @@ like a pipe (no full blocks), and everything you configure lives directly at the
   each other.
 * **Five tiers:** Copper, Reinforced, Precision, Resonant and Quantum, plus the Singularity tier for energy cables.
   Upgrade pipes in place with an upgrade bolt; the pipe keeps its settings and contents.
-* **Configure ports with the Conduit Wrench:** mode, redstone control, priority, distribution and copy/paste
-  profiles.
+* **Configure ports with the Conduit Wrench:** right-click switches the mode (classic controls: right-click opens
+  the port screen); the port screen holds redstone
+  control, priority, distribution, the face of the target block and copy/paste profiles.
 * **Filter cards instead of filter blocks:** put a card into the port itself.
 * **Tesseracts:** send resources through named channels, in one dimension or across all of them.
 * **Overcharge:** the Energy Pulse Amplifier stores energy and releases it in short, powerful pulses.
@@ -85,15 +87,43 @@ measured results.
 <a id="the-conduit-wrench"></a>
 ![The Conduit Wrench](images/headers/wrench.png)
 
-* **Right-click a port:** mode (insert, extract, both, off), redstone control, priority, distribution (round robin,
-  nearest first, sticky). The status line says why nothing moves, for example "Machine only gives: set this port
-  to Extract". Since 1.3.0 it updates while the screen is open.
+Controls since 1.4.1:
+
+| Action | Effect |
+|---|---|
+| Right-click a port | next mode: insert, extract, both, off |
+| Sneak + right-click a port | open the port screen |
+| Left-click an arm | disconnect it; left-click the same side of the centre again to reconnect |
+| Sneak + left-click a port | paste the active copy profile |
+| Sneak + right-click the centre | dismantle the pipe |
+| Sneak + right-click into the air | next copy profile |
+
+The wrench never breaks pipes by left-click.
+
+**Classic controls:** Pipster 1.3.0 and older, and 1.4.1 on servers with `wrenchClassicControls=true` in
+`config/pipster-server.properties`:
+
+| Action | Effect |
+|---|---|
+| Right-click a port | open the port screen; set the mode there |
+| Sneak + right-click an arm | disconnect it; sneak + right-click the same side of the centre again to reconnect |
+| Sneak + right-click the centre | dismantle the pipe |
+| Sneak + right-click into the air | next copy profile |
+
+With classic controls you paste with the Paste button in the port screen. Left-click does nothing with classic
+controls in 1.4.1; in 1.3.0 and older it breaks the pipe like any item. Details in the
+[wiki](../../wiki/Ports-and-the-Conduit-Wrench).
+
+* **Port screen:** mode, redstone control, priority, distribution (round robin, nearest first, sticky). The status
+  line says why nothing moves, for example "Machine only gives: set this port to Extract", and updates while the
+  screen is open.
+* **Face of the target block (new in 1.4.1):** the "Face" button picks which face of the block the port uses, for
+  blocks that take items only on certain faces (brewing stand: ingredients only from the top).
 * **Accept port (new in 1.1.0):** a side next to a block that pushes but offers no storage of its own (AE2 Export
   Bus, Create funnels, Oritech item and fluid pipes) can be set to **Accept**. It takes what the block pushes in and
   never pulls.
-* **Sneak + right-click an arm:** disconnect just that side; the same on the centre reconnects it, elsewhere it
-  dismantles the pipe.
-* **Copy and paste** port settings with 3 profiles. Cards are never copied.
+* **Copy and paste** port settings with 3 profiles. Since 1.4.1 pasting also moves the matching filter and rule
+  cards from your inventory into the port; cards are never created, a replaced card goes back to your inventory.
 
 <a id="filter-cards"></a>
 ![Filter Cards](images/headers/filters.png)
@@ -106,6 +136,10 @@ measured results.
 | Rule Card | – | per-port rate limit and energy reserve |
 
 Patterns are ghost items: nothing is used up.
+
+**Since 1.4.1:** a port in mode Both can have separate filters for what goes in and what comes out ("Filter: both /
+in / out" button). With JEI or REI installed, drag an item or fluid from the recipe viewer onto a filter field to
+set it as the pattern; the server checks that it fits the pipe, and no item is created.
 
 **Since 1.2.0:** fluid and gas pipes have a filter field with suggestions. Type a name or an id and pick a fluid,
 gas or (with Mekanism on NeoForge 1.21.1) chemical from the list; no filled container needed. `#` lists the tags of
@@ -189,7 +223,7 @@ Mod developers find the exact interfaces per version in the [API documentation](
 
 **Tested with the real mods** (dedicated server, client and all game tests; the game tests also send items, fluids
 and energy through real blocks of these mods and back, and check that nothing is lost or created). The table shows
-the runs with the 1.3.0 files (release check 2026-11-08; same result as 1.2.0 on these Minecraft versions).
+the partner runs; the 1.4.1 files passed them on 2026-11-16.
 
 | Mod | Where | What is checked |
 |---|---|---|
@@ -197,11 +231,13 @@ the runs with the 1.3.0 files (release check 2026-11-08; same result as 1.2.0 on
 | Sophisticated Storage | NeoForge, all five versions; Fabric 1.21.1 (unofficial port) | barrels |
 | Energized Power | all five versions, both loaders | battery box, fluid tank |
 | Oritech | 1.21.1 both loaders; NeoForge 26.1.2 (beta) | energy storage, tank |
-| Powah! | NeoForge 1.21.1; 26.1.2 (alpha) | energy cell |
+| Powah! | NeoForge 1.21.1; 26.1.2, 26.2, 26.3 (alpha builds) | energy cell |
+| Tech Reborn | Fabric 1.21.1, 26.1.2, 26.2, 26.3 | energy storage, tank (its storage units are not covered) |
 | Mekanism | NeoForge 1.21.1 | energy cube, fluid tank, chemicals through gas pipes |
 | Create | NeoForge 1.21.1 | fluid tank, Mechanical Arm targets item pipes |
 | Applied Energistics 2 | NeoForge 1.21.1 (with Applied Mekanistics), 26.1.2 – 26.3 | starts and runs together |
 | Immersive Machinery | 1.21.1, 26.1.2, 26.2, both loaders | starts and runs together (it has no blocks to connect) |
+| Carry On, Tom's Simple Storage | all five versions, both loaders | start and run together |
 
 "Where" lists the Minecraft versions on which the run was made. That is not a promise that every mod or every block
 works; please [report problems](#reporting-bugs).
@@ -213,7 +249,15 @@ What else to know:
 * **Fabric energy:** ports in Extract or Both actively pull energy (config `fabricEnergyPull`, on by default), so
   generators that push to the wrong side or not at all still work.
 * New energy ports next to a block that only gives start in Extract mode. Saved ports never change.
-* Datapack tags: `pipster:energy_no_insert` (never push energy into these blocks, e.g. Powah reactor parts) and
+* **Gaseous fluids of other mods** (since 1.4.1): oxygen and hydrogen of Ad Astra, the gases and steams of Modern
+  Industrialization and the gases and helium plasma of Tech Reborn are in `#pipster:gaseous` and travel in gas
+  pipes. A datapack can replace the tag with an empty list.
+* **Moving Pipster blocks** with Carry On, Create contraptions or the Mekanism cardboard box: automated tests move
+  pipes and tesseracts the way these mods do; contents, cards and channel bindings move with the block.
+* **Crafters** (since 1.4.1): a port never empties the crafting grid. A port in Extract or Both at the crafter's
+  front takes the result the crafter pushes out; Insert and Both fill it evenly, one item per slot.
+* Datapack tags: `pipster:energy_no_insert` (never push energy into these blocks, e.g. Powah reactor parts),
+  `pipster:no_extract` (never take anything out of these blocks; default: the crafter) and
   `pipster:extract_warning` (warn when an extract port could pull storage media out of a drive).
 
 ### Built-in optional integrations
@@ -224,9 +268,10 @@ integration is included for the Minecraft versions where the other mod has a rel
 
 | Mod | What you get |
 |---|---|
-| [Jade](https://modrinth.com/mod/jade) | Look at a pipe, tesseract or pulse amplifier: port mode and status, bound channels (names only if you have access), charge and status. |
+| [Jade](https://modrinth.com/mod/jade), [WTHIT](https://modrinth.com/mod/wthit) (1.4.1) | Look at a pipe, tesseract or pulse amplifier: port mode and status, a chosen face, separate filters, bound channels (names only if you have access), charge and status. |
+| [JEI](https://modrinth.com/mod/jei), [REI](https://modrinth.com/mod/rei) (1.4.1) | Drag an item or fluid from the recipe viewer onto a filter field of the port screen to set the pattern. |
 | [CC: Tweaked](https://modrinth.com/mod/cc-tweaked) | Computers read pipes, tesseracts and pulse amplifiers. With the redstone mode "Computer" they can switch ports. |
-| [Open Parties and Claims](https://modrinth.com/mod/open-parties-and-claims), [FTB Chunks](https://www.curseforge.com/minecraft/mc-mods/ftb-chunks-forge) | Claim protection: pipes cannot pull from or push into blocks in someone else's claim. |
+| [Open Parties and Claims](https://modrinth.com/mod/open-parties-and-claims), [FTB Chunks](https://www.curseforge.com/minecraft/mc-mods/ftb-chunks-forge), [Flan](https://modrinth.com/mod/flan) (1.4.1) | Claim protection: pipes cannot pull from or push into blocks in someone else's claim. With Flan, pipes and tesseracts follow Flan's "piston border" flag. |
 | FTB Teams, Open Parties and Claims parties | Team sharing: teammates share channels, tesseracts and pipes, also for things placed before they joined. |
 | LuckPerms and other permission mods | Permission nodes `pipster.admin` and `pipster.command`. Without a permission mod, operators (level 2) keep these rights. |
 | Create | The Mechanical Arm can target item pipe sides (NeoForge 1.21.1). |
@@ -237,17 +282,19 @@ The Conduit Wrench is also tagged `c:tools/wrench`, so other mods recognise it a
 <a id="version-status"></a>
 ![Version Status](images/headers/versions.png)
 
-Pipster 1.3.0 has one jar per Minecraft version and loader; no jar covers several Minecraft versions.
+Pipster 1.4.1 has one jar per Minecraft version and loader; no jar covers several Minecraft versions.
 
 | Minecraft | Fabric jar | NeoForge jar |
 |---|---|---|
-| 1.21.1 | `pipster-1.3.0+mc1.21.1-fabric.jar` | `pipster-1.3.0+mc1.21.1-neoforge.jar` |
-| 1.21.11 | `pipster-1.3.0+mc1.21.11-fabric.jar` | `pipster-1.3.0+mc1.21.11-neoforge.jar` |
-| 26.1.2 | `pipster-1.3.0+mc26.1.2-fabric.jar` | `pipster-1.3.0+mc26.1.2-neoforge.jar` ¹ |
-| 26.2 | `pipster-1.3.0+mc26.2-fabric.jar` | `pipster-1.3.0+mc26.2-neoforge.jar` ¹ |
-| 26.3 | `pipster-1.3.0+mc26.3-fabric.jar` | `pipster-1.3.0+mc26.3-neoforge.jar` ¹ |
+| 1.21.1 | `pipster-1.4.1+mc1.21.1-fabric.jar` | `pipster-1.4.1+mc1.21.1-neoforge.jar` |
+| 1.21.11 | `pipster-1.4.1+mc1.21.11-fabric.jar` | `pipster-1.4.1+mc1.21.11-neoforge.jar` |
+| 26.1.2 | `pipster-1.4.1+mc26.1.2-fabric.jar` | `pipster-1.4.1+mc26.1.2-neoforge.jar` ¹ |
+| 26.2 | `pipster-1.4.1+mc26.2-fabric.jar` | `pipster-1.4.1+mc26.2-neoforge.jar` ¹ |
+| 26.3 | `pipster-1.4.1+mc26.3-fabric.jar` ² | `pipster-1.4.1+mc26.3-neoforge.jar` ¹ |
 
-¹ Needs at least NeoForge 26.1.2.122, 26.2.0.93 or 26.3.0.97 (since 1.1.0; current partner mods need these builds).
+¹ Needs at least NeoForge 26.1.2.122, 26.2.0.93 or 26.3.0.100 (26.3 raised in 1.4.1, the others since 1.1.0;
+current partner mods need these builds).
+² Needs at least Fabric API 0.165.2+26.3 (raised in 1.4.1; WTHIT needs it).
 
 **Other Minecraft versions** (1.21.2 – 1.21.10, 26.1, 26.1.1): use Pipster 1.2.0. It stays available and keeps
 working. Builds for further versions only come back if enough players ask for them in the
@@ -257,7 +304,7 @@ Before a jar is released, it is tested on its Minecraft version: client and dedi
 automated game tests (item, fluid, energy and gas transport, throughput limits, filters, tesseracts, the pulse
 amplifier, claims and teams, break/place with stored contents, save/load, network packet checks), plus runs with the
 integrations and partner mods above wherever those exist.
-All ten 1.3.0 files passed this release check on 2026-11-08: 188 runs passed, none failed; 12 runs could not take place for reasons outside Pipster (Open Parties and Claims cannot start on a game-test server and is checked on the dedicated server instead; CC: Tweaked 1.120.3 does not start on NeoForge 26.3).
+Release check of the ten 1.4.1 files: passed on 2026-11-16: each of the ten files on its Minecraft version (dedicated server, client, all game tests) and with the partner mods of that version. 318 runs passed, none failed; 10 runs could not take place because Open Parties and Claims cannot start on a game-test server (it is checked on the dedicated server instead).
 The exact loader versions are listed in the wiki under [Supported Versions](../../wiki/Supported-Versions).
 
 <a id="performance"></a>
@@ -266,8 +313,11 @@ The exact loader versions are listed in the wiki under [Supported Versions](../.
 Pipster does no work per pipe per tick. It keeps one transport graph per dimension and resource type on the server,
 rebuilds it in bounded steps, and never loads chunks.
 
-**1.3.0 was not measured again:** it only changes models, textures and the refresh of the port screen; the transport
-code did not change in a way that matters for performance. All numbers below were measured with older versions.
+**1.4.1 compared with 1.3.0** (2026-11-14, same machine, scene "50,000 pipes, 500 active ports", 1.21.1 and 26.3,
+both loaders, alternating runs; development build without the later crafter rule): no measurable difference. It
+needed 2.5 – 3.0 ms per tick on
+average and 4.1 – 4.9 ms p95 (medians of the rounds). Details are on the wiki page
+[Performance](../../wiki/Performance). The table below was measured for 1.1.0.
 
 Measured for 1.1.0 on an Intel Core i7-13700H (dedicated server, Minecraft 1.21.1 and 26.3, both loaders):
 

@@ -48,7 +48,7 @@ API and to publish mods that use it. It does not allow modifying or redistributi
 | Energy | Team Reborn Energy `EnergyStorage.SIDED` | `Capabilities.EnergyStorage.BLOCK` (`IEnergyStorage`) | `Capabilities.Energy.BLOCK` (`EnergyHandler`) |
 | Gas | Pipster `GasHandler` via `BlockApiLookup` | Pipster `GasHandler` via `BlockCapability` | Pipster `GasHandler` via `BlockCapability` |
 
-Pipster 1.3.0 is made for Minecraft 1.21.1, 1.21.11, 26.1.2, 26.2 and 26.3. Pipster 1.2.0 also covers
+Pipster 1.4.1 (like 1.3.0) is made for Minecraft 1.21.1, 1.21.11, 26.1.2, 26.2 and 26.3. Pipster 1.2.0 also covers
 1.21.2 – 1.21.10, 26.1 and 26.1.1: there, NeoForge 1.21.2 – 1.21.8 uses the interfaces of the 1.21.1 column and
 NeoForge 1.21.9 and 1.21.10 those of the last column.
 
@@ -124,15 +124,18 @@ public interface GasHandler {
 A gas pipe network carries exactly one gas domain at a time. The first successful transfer picks it:
 
 * `pipster:gas`: gases from this API
-* `pipster:fluid_gas`: fluids in the fluid tag `#pipster:gaseous` (a datapack can add fluids;
-  default empty). These go through gas pipes instead of fluid pipes.
+* `pipster:fluid_gas`: fluids in the fluid tag `#pipster:gaseous`. These go through gas pipes instead of fluid
+  pipes. Until 1.3.0 the tag was empty by default. Since 1.4.1 it holds optional entries (`required: false`) for
+  fluids that other mods model as gases: Ad Astra (`oxygen`, `hydrogen`), Modern Industrialization (its fluids with
+  `isGas = true`) and Tech Reborn (its gases and helium plasma). A datapack can add fluids, or replace the tag
+  (`"replace": true`) to change the default content.
 
 * `mekanism:chemical` (since 1.1.0, NeoForge 1.21.1 with Mekanism): Mekanism chemicals through
   Mekanism's own `mekanism:chemical_handler` capability. Nothing to do for mod developers; Mekanism
   blocks and blocks that offer that capability work directly.
 
-Pipster never converts between domains, even for identical ids. The API is unchanged in 1.1.0, 1.2.0
-and 1.3.0: mods built against `pipster-api-1` keep working.
+Pipster never converts between domains, even for identical ids. The API is unchanged in 1.1.0, 1.2.0,
+1.3.0 and 1.4.1: mods built against `pipster-api-1` keep working.
 
 ## 3. Endpoint providers
 
@@ -183,7 +186,7 @@ on the server thread and stay within the one block.
 | Method (target) | Returns / does |
 |---|---|
 | `getConduit()` (conduit) | `{kind, tier, rebuilding, network?, nodes?, ports?}` |
-| `getPorts()` (conduit) | ports by side name: `{mode, status, priority, redstone, enabled?, quarantined, buffer = [{name, amount, unit}]}` |
+| `getPorts()` (conduit) | ports by side name: `{mode, status, priority, redstone, enabled?, face?, separateFilters?, quarantined, buffer = [{name, amount, unit}]}`; `face` (1.4.1) only when the port uses another face of the neighbour than the facing side, `separateFilters` (1.4.1) only when a port in mode `both` has a separate out filter |
 | `getPort(side)` (conduit) | one port; error if there is none |
 | `setPortEnabled(side, enabled)` (conduit) | switches the port on or off (redstone mode "computer" only) |
 | `setPortMode(side, mode)` (conduit) | `insert`, `extract`, `both`, `disabled` (redstone mode "computer" only) |
