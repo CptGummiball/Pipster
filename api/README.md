@@ -48,9 +48,9 @@ API and to publish mods that use it. It does not allow modifying or redistributi
 | Energy | Team Reborn Energy `EnergyStorage.SIDED` | `Capabilities.EnergyStorage.BLOCK` (`IEnergyStorage`) | `Capabilities.Energy.BLOCK` (`EnergyHandler`) |
 | Gas | Pipster `GasHandler` via `BlockApiLookup` | Pipster `GasHandler` via `BlockCapability` | Pipster `GasHandler` via `BlockCapability` |
 
-Pipster 1.4.1 (like 1.3.0) is made for Minecraft 1.21.1, 1.21.11, 26.1.2, 26.2 and 26.3. Pipster 1.2.0 also covers
-1.21.2 – 1.21.10, 26.1 and 26.1.1: there, NeoForge 1.21.2 – 1.21.8 uses the interfaces of the 1.21.1 column and
-NeoForge 1.21.9 and 1.21.10 those of the last column.
+Pipster 1.5.0 is made for Minecraft 1.21.1, 1.21.11, 26.1 to 26.1.2, 26.2 and 26.3 (1.3.0 and 1.4.1: the same without
+26.1 and 26.1.1); the 26.x versions use the last column. Pipster 1.2.0 also covers 1.21.2 – 1.21.10: there, NeoForge
+1.21.2 – 1.21.8 uses the interfaces of the 1.21.1 column and NeoForge 1.21.9 and 1.21.10 those of the last column.
 
 Team Reborn Energy versions Pipster was tested with: 4.1.0 (1.21.1), 4.2.0 (1.21.11), 5.0.0 (26.x);
 Pipster 1.2.0 also 4.1.0 (1.21.2–1.21.4) and 4.2.0 (1.21.5–1.21.10).
@@ -135,7 +135,7 @@ A gas pipe network carries exactly one gas domain at a time. The first successfu
   blocks and blocks that offer that capability work directly.
 
 Pipster never converts between domains, even for identical ids. The API is unchanged in 1.1.0, 1.2.0,
-1.3.0 and 1.4.1: mods built against `pipster-api-1` keep working.
+1.3.0, 1.4.1 and 1.5.0: mods built against `pipster-api-1` keep working.
 
 ## 3. Endpoint providers
 
@@ -186,7 +186,8 @@ on the server thread and stay within the one block.
 | Method (target) | Returns / does |
 |---|---|
 | `getConduit()` (conduit) | `{kind, tier, rebuilding, network?, nodes?, ports?}` |
-| `getPorts()` (conduit) | ports by side name: `{mode, status, priority, redstone, enabled?, face?, separateFilters?, quarantined, buffer = [{name, amount, unit}]}`; `face` (1.4.1) only when the port uses another face of the neighbour than the facing side, `separateFilters` (1.4.1) only when a port in mode `both` has a separate out filter |
+| `getNetworkWarnings()` (conduit, 1.5.0) | warning state of the conduit's network: `{network, watched, maxLoad?, fullSeconds?, quarantined?, overloaded?, warnings? = ["saturated" \| "quarantined" \| "overloaded"], lastWarning?, lastWarningSecondsAgo?}`; only networks watched with the Network Analyzer are measured (`watched = false` otherwise), values from the last 5 s sample |
+| `getPorts()` (conduit) | ports by side name: `{mode, status, priority, redstone, enabled?, face?, separateFilters?, quarantined, blocked, buffer = [{name, amount, unit}]}`; `face` (1.4.1) only when the port uses another face of the neighbour than the facing side, `separateFilters` (1.4.1) only when a port in mode `both` has a separate out filter; `blocked` (1.5.0) is what the comparator signal of the pipe reports for this port: it cannot deliver because every matching target is full or there is none, or its block refused goods because it is full |
 | `getPort(side)` (conduit) | one port; error if there is none |
 | `setPortEnabled(side, enabled)` (conduit) | switches the port on or off (redstone mode "computer" only) |
 | `setPortMode(side, mode)` (conduit) | `insert`, `extract`, `both`, `disabled` (redstone mode "computer" only) |
@@ -196,7 +197,7 @@ on the server thread and stay within the one block.
 
 Sides are `down`, `up`, `north`, `south`, `west`, `east`. Amounts use display units (items, mB,
 E). Status values are the port statuses in lower case, for example `active`, `source_empty`,
-`targets_full`, `claim_protected`, `computer_off`, and since 1.1.0 `accept_only` (an accept port: it only takes
+`targets_full`, `claim_protected`, `computer_off`, since 1.5.0 `only_higher_priority`, `set_collecting`, `set_waiting` and `set_impossible`, and since 1.1.0 `accept_only` (an accept port: it only takes
 what the neighbour pushes in).
 
 ### Permission nodes

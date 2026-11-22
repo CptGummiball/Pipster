@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for asking! Pipster is made and tested for **Minecraft 1.21.1, 1.21.11, 26.1.2, 26.2 and 26.3**, each for
+        Thanks for asking! Pipster is made and tested for **Minecraft 1.21.1, 1.21.11, 26.1 to 26.1.2, 26.2 and 26.3**, each for
         **Fabric and NeoForge**
         Every new version means a full test round (client, dedicated server, all automated game tests, the supported
         mods of that version), so requests with a real use help decide what comes next.
