@@ -354,10 +354,11 @@ The exact loader versions are listed in the wiki under [Supported Versions](../.
 Pipster does no work per pipe per tick. It keeps one transport graph per dimension and resource type on the server,
 rebuilds it in bounded steps, and never loads chunks.
 
-**The performance measurement of 1.5.0 is still pending.** It follows after the release; the numbers will then be
-here and in the wiki under [Performance](../../wiki/Performance), together with the machine and the method. Earlier
-numbers were removed because the test scenes changed with 1.5.0. Measured numbers only ever hold for that machine
-and those scenes; they are no guarantee of 20 TPS on other hardware or in other worlds.
+**Measured with 1.5.0** on a laptop (Intel Core i7-13700H, 32 GB RAM) with a dedicated server: 10,000 idle pipes
+need about 0.01 ms per tick, 500 busy ports on 50,000 pipes about 3 to 5 ms, and a mixed base with items, fluids,
+gas, energy, tesseracts and crafters about 2 ms. A server tick has 50 ms. All scenes, the method and the notes on the
+measurement are in the wiki under [Performance](../../wiki/Performance). Measured numbers only ever hold for that
+machine and those scenes; they are no guarantee of 20 TPS on other hardware or in other worlds.
 
 <a id="downloads"></a>
 ![Downloads](images/headers/downloads.png)
