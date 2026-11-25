@@ -10,6 +10,24 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/version-1.5.1-6EC4A0?style=flat-square" alt="Version 1.5.1">
+  <img src="https://img.shields.io/badge/Fabric-DBD0B4?style=flat-square" alt="Fabric">
+  <img src="https://img.shields.io/badge/NeoForge-F16436?style=flat-square" alt="NeoForge">
+  <a href="https://modrinth.com/mod/pipster">
+    <img src="https://img.shields.io/modrinth/dt/pipster?style=flat-square&logo=modrinth&label=Modrinth&color=1BD96A" alt="Modrinth downloads">
+  </a>
+  <a href="https://www.curseforge.com/minecraft/mc-mods/pipster">
+    <img src="https://img.shields.io/curseforge/dt/1719991?style=flat-square&logo=curseforge&label=CurseForge&color=F16436" alt="CurseForge downloads">
+  </a>
+  <a href="https://github.com/CptGummiball/pipster/releases">
+    <img src="https://img.shields.io/github/downloads/CptGummiball/pipster/total?style=flat-square&logo=github&label=GitHub" alt="GitHub downloads">
+  </a>
+  <a href="https://ko-fi.com/cptgummiball">
+    <img src="https://img.shields.io/badge/Ko--fi-FF5E5B?logo=ko-fi&logoColor=white&style=flat-square" alt="Ko-fi">
+  </a>
+</p>
+
+<p align="center">
   <a href="#downloads">Download</a> ·
   <a href="#version-status">Versions</a> ·
   <a href="../../wiki">Wiki</a> ·
@@ -18,14 +36,9 @@
   <a href="#license">License</a>
 </p>
 
-> **Version 1.5.0.** For Minecraft 1.21.1, 1.21.11, 26.1 to 26.1.2, 26.2 and 26.3 on Fabric and NeoForge (26.1
-> and 26.1.1 are back); see [Version status](#version-status). New: an in-game guide (key Z or the Pipster Guide item)
-> with troubleshooting and examples, the Network Analyzer with network warnings, a test run for ports, quantity
-> rules (refill, minimum amount), the Cargo Loader for minecarts and chest boats, coloured pipes and cables, crafters
-> filled only with complete sets, a comparator signal when a pipe cannot deliver, a settings screen, new 3D models,
-> Portuguese (Brazil) and Spanish, and optional support for The One Probe, EMI and Mod Menu. Ports on "Both" no
-> longer pass items back and forth. Worlds from 1.4.1 load without conversion, and mods built against the Pipster
-> API keep working. For Minecraft 1.21.2 to 1.21.10, Pipster 1.2.0 stays available.
+> ## ⚠️ Updating is strongly recommended for everyone using 1.5.0, especially on servers.
+> Pipster 1.5.0 can freeze a server after some hours of running. It happens as soon as a machine or chest takes items from a pipe and is full again right away, for example a furnace or a crafting machine fed by several pipes, which is a very common setup. The server gets a little slower with every hour and is finally stopped by its watchdog ("Watchdog" crash). A restart only helps for a while. 1.5.1 fixes the cause; no items were lost or created by this fault, and worlds keep working unchanged.
+
 
 This repository holds the documentation, the [wiki](../../wiki), the [issue tracker](../../issues) and the
 [API for mod developers](api/README.md). The mod itself is downloaded from Modrinth or CurseForge. Pipster is not
@@ -327,11 +340,11 @@ Pipster 1.5.0 has one jar per Minecraft version and loader; one jar per loader c
 
 | Minecraft | Fabric jar | NeoForge jar |
 |---|---|---|
-| 1.21.1 | `pipster-1.5.0+mc1.21.1-fabric.jar` | `pipster-1.5.0+mc1.21.1-neoforge.jar` |
-| 1.21.11 | `pipster-1.5.0+mc1.21.11-fabric.jar` | `pipster-1.5.0+mc1.21.11-neoforge.jar` |
-| 26.1, 26.1.1, 26.1.2 | `pipster-1.5.0+mc26.1-26.1.2-fabric.jar` | `pipster-1.5.0+mc26.1-26.1.2-neoforge.jar` |
-| 26.2 | `pipster-1.5.0+mc26.2-fabric.jar` | `pipster-1.5.0+mc26.2-neoforge.jar` ¹ |
-| 26.3 | `pipster-1.5.0+mc26.3-fabric.jar` ² | `pipster-1.5.0+mc26.3-neoforge.jar` ¹ |
+| 1.21.1 | `pipster-1.5.1+mc1.21.1-fabric.jar` | `pipster-1.5.1+mc1.21.1-neoforge.jar` |
+| 1.21.11 | `pipster-1.5.1+mc1.21.11-fabric.jar` | `pipster-1.5.1+mc1.21.11-neoforge.jar` |
+| 26.1, 26.1.1, 26.1.2 | `pipster-1.5.1+mc26.1-26.1.2-fabric.jar` | `pipster-1.5.1+mc26.1-26.1.2-neoforge.jar` |
+| 26.2 | `pipster-1.5.1+mc26.2-fabric.jar` | `pipster-1.5.1+mc26.2-neoforge.jar` ¹ |
+| 26.3 | `pipster-1.5.1+mc26.3-fabric.jar` ² | `pipster-1.5.1+mc26.3-neoforge.jar` ¹ |
 
 ¹ Needs at least NeoForge 26.2.0.93 or 26.3.0.100 (26.3 raised in 1.4.1, 26.2 since 1.1.0; current partner mods
 need these builds).
